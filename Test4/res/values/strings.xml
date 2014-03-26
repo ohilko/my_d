@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Test4</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="download_SD">Download from SD</string>
+    <string name="download_cloud">Download from Cloud</string>
+    <string name="load_previous_data">Load previous data</string>
+    <string name="browse">Browse</string>
+    <string name="open">Open</string>
+    <string name="connect">Connect</string>
+    <string name="some_hint_path">Path&#8230;</string>
+    <string name="some_hint_login">Login&#8230;</string>
+    <string name="some_hint_password">Password&#8230;</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_sd">SDActivity</string>
+    <string name="title_activity_cloud">CloudActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_list_request">ListRequestActivity</string>
+    <string name="activity_see_no_items">No requests to display</string>
+    
+    <string name="label_date">Data</string>
+    <string name="label_provider">Provider</string>
+    <string name="label_allCost">All cost</string>
+    <string name="label_products">Products</string>
+    <string name="label_products_name">Name</string>
+    <string name="label_products_price">Price</string>
+    <string name="label_products_amount">Amount</string>
+    
+    <string-array name="cloud_array">
+        <item>Dropbox</item>
+        <item>Google Drive</item>
+    </string-array>
+
+    <string name="title_activity_add_edit_request">AddEditRequestActivity</string>
+    <string name="title_activity_upload">UploadActivity</string>
+    <string name="title_activity_view_request">ViewRequestActivity</string>
+
+</resources>

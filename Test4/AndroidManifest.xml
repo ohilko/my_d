@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ohilko.test4"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="17" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="ohilko.test4.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="ohilko.test4.AboutActivity"
+            android:label="@string/title_activity_about" >
+        </activity>
+        <activity
+            android:name="ohilko.test4.SDActivity"
+            android:label="@string/title_activity_sd" >
+        </activity>
+        <activity
+            android:name="ohilko.test4.CloudActivity"
+            android:label="@string/title_activity_cloud" >
+        </activity>
+        <activity
+            android:name="ohilko.test4.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name="ohilko.test4.ListRequestActivity"
+            android:label="@string/title_activity_list_request" >
+        </activity>
+        <activity
+            android:name="ohilko.test4.AddEditRequestActivity"
+            android:label="@string/title_activity_add_edit_request" >
+        </activity>
+        <activity
+            android:name="ohilko.test4.UploadActivity"
+            android:label="@string/title_activity_upload" >
+        </activity>
+        <activity
+            android:name="ohilko.test4.ViewRequestActivity"
+            android:label="@string/title_activity_view_request" >
+        </activity>
+    </application>
+
+</manifest>
