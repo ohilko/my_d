@@ -24,73 +24,72 @@ public class DatabaseConnector {
 			database.close();
 	}
 
-	public void insertClient(String name, String address, String phone) {
-		ContentValues newClient = new ContentValues();
-		newClient.put(DatabaseOpenHelper.KEY_NAME, name);
-		newClient.put(DatabaseOpenHelper.KEY_ADDRESS, address);
-		newClient.put(DatabaseOpenHelper.KEY_PHONE, phone);
+	public void insertRow(String table_name, String[] table_fields, String[] data) {
+		ContentValues row = new ContentValues();
+		for (int i = 0; i < table_fields.length; i++) {
+			row.put(table_fields[i], data[i]);
+		}
 		try {
 			open();
-			database.insert(DatabaseOpenHelper.TABLE_NAME, null, newClient);
+			database.insert(table_name, null, row);
 		} finally {
 			close();
 		}
 	}
-
-	public void updateClient(long id, String name, String address, String phone) {
-		ContentValues editClient = new ContentValues();
-		editClient.put(DatabaseOpenHelper.KEY_NAME, name);
-		editClient.put(DatabaseOpenHelper.KEY_ADDRESS, address);
-		editClient.put(DatabaseOpenHelper.KEY_PHONE, phone);
+	public void updateRow(long id, String table_name, String[] table_fields, String[] data) {
+		ContentValues row = new ContentValues();
+		for (int i = 0; i < table_fields.length; i++) {
+			row.put(table_fields[i], data[i]);
+		}
 		try {
 			open();
-			database.update(DatabaseOpenHelper.TABLE_NAME, editClient, "_id="
+			database.update(table_name, row, "_id="
 					+ id, null);
 		} finally {
 			close();
 		}
 	}
-
-	public Cursor getAllClients() {
-		return database.query(DatabaseOpenHelper.TABLE_NAME, new String[] {
-				"_id", DatabaseOpenHelper.KEY_NAME,
-				DatabaseOpenHelper.KEY_ADDRESS, DatabaseOpenHelper.KEY_PHONE },
-				null, null, null, null, "name");
-	}
-
-	public Cursor getAllClients(String str) {
-		return database.query(DatabaseOpenHelper.TABLE_NAME, new String[] {
-				"_id", DatabaseOpenHelper.KEY_NAME,
-				DatabaseOpenHelper.KEY_ADDRESS, DatabaseOpenHelper.KEY_PHONE },
-				"name LIKE '%" + str + "%'", null, null, null, null);
-
-	}
-
-	public Cursor getOneClient(long id) {
-		return database.query(DatabaseOpenHelper.TABLE_NAME, null, "_id=" + id,
-				null, null, null, null);
-	}
-
-	public void deleteClient(long id) {
+	
+	public void deleteRow(String table_name, long id) {
 		open();
-		database.delete(DatabaseOpenHelper.TABLE_NAME, "_id=" + id, null);
+		database.delete(table_name, "_id=" + id, null);
 		close();
 	}
-
-	public void deleteAllRows() {
+	
+	public void deleteAllRows(String table_name) {
 		try {
 			open();
-			database.delete(DatabaseOpenHelper.TABLE_NAME, null, null);
+			database.delete(table_name, null, null);
 		} finally {
 			close();
 		}
 	}
+	
+	public Cursor getAllRows(String table_name, String[] table_fields, String sort_field) {
+		return database.query(table_name, table_fields,
+				null, null, null, null, sort_field);
 
-	private class DatabaseOpenHelper extends SQLiteOpenHelper {
-		private static final String TABLE_NAME = "Client";
-		private static final String KEY_NAME = "name";
-		private static final String KEY_ADDRESS = "address";
-		private static final String KEY_PHONE = "phone";
+	}
+	
+	public Cursor getRow(String table_name, long id) {
+		return database.query(table_name, null, "_id=" + id,
+				null, null, null, null);
+	}
+	
+
+	private static class DatabaseOpenHelper extends SQLiteOpenHelper {
+		private static final String[] PROVIDER_FIELDS = {"_id", "1cID", "name",
+				"address", "phone" };
+		private static final String[] PRODUCT_FIELDS = {"_id", "1cID",
+				"1cID_directory", "name", "unitMeasurement", "price" };
+		private static final String[] REQUEST_FIELDS = {"_id", "provider_id", "date",
+				"allCost" };
+		private static final String[] REQUEST_PRODUCT_FIELDS = {"_id", "request_id",
+				"product_id", "amount" };
+		private static final String[] PRODUCT_CHILD_FIELDS = {"_id", "product_id",
+				"product_id" };
+		private static final String[] TABLE_NAME = {"_id", "Product", "Provider",
+				"Request", "Product_child", "Request_product" };
 
 		public DatabaseOpenHelper(Context context, String name,
 				CursorFactory factory, int version) {
@@ -99,12 +98,29 @@ public class DatabaseConnector {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			String createQuery = "CREATE TABLE " + TABLE_NAME
-					+ "(_id integer primary key autoincrement, " + KEY_NAME
-					+ " TEXT, " + KEY_ADDRESS + " TEXT, " + KEY_PHONE
-					+ " TEXT);";
+			String createQuery = "";
+			createQuery += createTable(PRODUCT_FIELDS, TABLE_NAME[0]);
+			createQuery += createTable(PROVIDER_FIELDS, TABLE_NAME[1]);
+			createQuery += createTable(REQUEST_FIELDS, TABLE_NAME[2]);
+			createQuery += createTable(PRODUCT_CHILD_FIELDS, TABLE_NAME[3]);
+			createQuery += createTable(REQUEST_PRODUCT_FIELDS, TABLE_NAME[4]);
 
 			db.execSQL(createQuery);
+		}
+
+		private String createTable(String[] table, String table_name) {
+			String createQuery = "";
+			String text = " TEXT, ";
+			String end = ");";
+
+			createQuery += "CREATE TABLE " + table_name
+					+ "(_id integer primary key autoincrement, ";
+			for (int j = 1; j < table.length; j++) {
+				createQuery += table[j] + text;
+			}
+			createQuery += end;
+
+			return createQuery;
 		}
 
 		@Override
