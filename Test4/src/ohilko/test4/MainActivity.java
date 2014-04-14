@@ -86,15 +86,11 @@ public class MainActivity extends Activity {
 	{
 		switch (item.getItemId()) {
 		case 100: {
-			Intent intent = new Intent(MainActivity.this,
-					ListRequestActivity.class);
-			startActivity(intent);
+			startNewActivity(ListRequestActivity.class);
 			break;
 		}
 		case 200: {
-			Intent intent = new Intent(MainActivity.this,
-					SettingsActivity.class);
-			startActivity(intent);
+			startNewActivity(SettingsActivity.class);
 			break;
 		}
 		default:
@@ -102,5 +98,10 @@ public class MainActivity extends Activity {
 		}
 		
 		return true;
+	}
+
+	private void startNewActivity(Class l) {
+		Intent intent = new Intent(this, l);
+		startActivity(intent);
 	}
 }

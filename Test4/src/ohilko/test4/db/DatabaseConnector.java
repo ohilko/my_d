@@ -7,6 +7,19 @@ import android.database.sqlite.SQLiteDatabase.*;
 
 public class DatabaseConnector {
 	private static final String DATABASE_NAME = "db_diplom";
+	public static final String[] PROVIDER_FIELDS = { "_id", "ID", "name",
+			"address", "phone" };
+	public static final String[] PRODUCT_FIELDS = { "_id", "ID",
+			"ID_directory", "name", "unitMeasurement", "price" };
+	public static final String[] REQUEST_FIELDS = { "_id", "provider_id",
+			"date", "allCost" };
+	public static final String[] REQUEST_PRODUCT_FIELDS = { "_id",
+			"request_id", "product_id", "amount" };
+	public static final String[] PRODUCT_CHILD_FIELDS = { "_id", "product_id",
+			"product_id" };
+	public static final String[] TABLE_NAME = { "Product", "Provider",
+			"Request", "Product_child", "Request_product" };
+
 	private SQLiteDatabase database;
 	private DatabaseOpenHelper databaseOpenHelper;
 
@@ -24,10 +37,11 @@ public class DatabaseConnector {
 			database.close();
 	}
 
-	public void insertRow(String table_name, String[] table_fields, String[] data) {
+	public void insertRow(String table_name, String[] table_fields,
+			String[] data) {
 		ContentValues row = new ContentValues();
-		for (int i = 0; i < table_fields.length; i++) {
-			row.put(table_fields[i], data[i]);
+		for (int i = 1; i < table_fields.length; i++) {
+			row.put(table_fields[i], data[i-1]);
 		}
 		try {
 			open();
@@ -36,26 +50,27 @@ public class DatabaseConnector {
 			close();
 		}
 	}
-	public void updateRow(long id, String table_name, String[] table_fields, String[] data) {
+
+	public void updateRow(long id, String table_name, String[] table_fields,
+			String[] data) {
 		ContentValues row = new ContentValues();
-		for (int i = 0; i < table_fields.length; i++) {
-			row.put(table_fields[i], data[i]);
+		for (int i = 1; i < table_fields.length; i++) {
+			row.put(table_fields[i], data[i-1]);
 		}
 		try {
 			open();
-			database.update(table_name, row, "_id="
-					+ id, null);
+			database.update(table_name, row, "_id=" + id, null);
 		} finally {
 			close();
 		}
 	}
-	
+
 	public void deleteRow(String table_name, long id) {
 		open();
 		database.delete(table_name, "_id=" + id, null);
 		close();
 	}
-	
+
 	public void deleteAllRows(String table_name) {
 		try {
 			open();
@@ -64,32 +79,20 @@ public class DatabaseConnector {
 			close();
 		}
 	}
-	
-	public Cursor getAllRows(String table_name, String[] table_fields, String sort_field) {
-		return database.query(table_name, table_fields,
-				null, null, null, null, sort_field);
+
+	public Cursor getAllRows(String table_name, String[] table_fields,
+			String sort_field) {
+		return database.query(table_name, table_fields, null, null, null, null,
+				sort_field);
 
 	}
-	
+
 	public Cursor getRow(String table_name, long id) {
-		return database.query(table_name, null, "_id=" + id,
-				null, null, null, null);
+		return database.query(table_name, null, "_id=" + id, null, null, null,
+				null);
 	}
-	
 
 	private static class DatabaseOpenHelper extends SQLiteOpenHelper {
-		private static final String[] PROVIDER_FIELDS = {"_id", "1cID", "name",
-				"address", "phone" };
-		private static final String[] PRODUCT_FIELDS = {"_id", "1cID",
-				"1cID_directory", "name", "unitMeasurement", "price" };
-		private static final String[] REQUEST_FIELDS = {"_id", "provider_id", "date",
-				"allCost" };
-		private static final String[] REQUEST_PRODUCT_FIELDS = {"_id", "request_id",
-				"product_id", "amount" };
-		private static final String[] PRODUCT_CHILD_FIELDS = {"_id", "product_id",
-				"product_id" };
-		private static final String[] TABLE_NAME = {"_id", "Product", "Provider",
-				"Request", "Product_child", "Request_product" };
 
 		public DatabaseOpenHelper(Context context, String name,
 				CursorFactory factory, int version) {

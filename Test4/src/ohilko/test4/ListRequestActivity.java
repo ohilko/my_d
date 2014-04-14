@@ -3,8 +3,11 @@ package ohilko.test4;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ohilko.test4.db.DatabaseConnector;
+
 import android.app.*;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
@@ -17,6 +20,7 @@ public class ListRequestActivity extends Activity {
 	private static final String PRICEKEY = "bookprice";
 	private static final String PRICEKEY1 = "bookprice1";
 	private static final String IMGKEY = "iconfromraw";
+	private DatabaseConnector db;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,13 @@ public class ListRequestActivity extends Activity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		ListView listView = (ListView) findViewById(R.id.listView_see);
+		db = new DatabaseConnector(this);
+		db.open();
+		Cursor requests = db.getAllRows(DatabaseConnector.TABLE_NAME[2], DatabaseConnector.REQUEST_FIELDS, "date");
+		
+		while (requests.moveToNext()) {
+			
+		}
 		myBooks = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> hm;
 
@@ -43,7 +54,7 @@ public class ListRequestActivity extends Activity {
 		hm.put(BOOKKEY, "Футболке");
 		hm.put(PRICEKEY, "какой-то текст");
 		hm.put(PRICEKEY1, "какой-то текст");
-		hm.put(IMGKEY, R.drawable.list); // тут мы её добавляем для отображения
+		hm.put(IMGKEY, R.drawable.ic_launcher); // тут мы её добавляем для отображения
 
 		myBooks.add(hm);
 
@@ -51,7 +62,7 @@ public class ListRequestActivity extends Activity {
 		hm.put(BOOKKEY, "Робад");
 		hm.put(PRICEKEY, "какой-то текст");
 		hm.put(PRICEKEY1, "какой-то текст");
-		hm.put(IMGKEY, R.drawable.list); // тут мы её добавляем для отображения
+		hm.put(IMGKEY, R.drawable.ic_launcher); // тут мы её добавляем для отображения
 
 		myBooks.add(hm);
 
@@ -59,7 +70,7 @@ public class ListRequestActivity extends Activity {
 		hm.put(BOOKKEY, "Еще коробке");
 		hm.put(PRICEKEY, "какой-то текст");
 		hm.put(PRICEKEY1, "какой-то текст");
-		hm.put(IMGKEY, R.drawable.list);
+		hm.put(IMGKEY, R.drawable.ic_launcher);
 
 		myBooks.add(hm);
 
@@ -78,9 +89,7 @@ public class ListRequestActivity extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
-			Intent viewContact = new Intent(ListRequestActivity.this, ViewRequestActivity.class);
-
-			startActivity(viewContact);
+			startNewActivity(ViewRequestActivity.class);
 		}
 	};
 	
@@ -109,27 +118,19 @@ public class ListRequestActivity extends Activity {
 			break;
 		}
 		case 100: {
-			Intent intent = new Intent(ListRequestActivity.this,
-					ListRequestActivity.class);
-			startActivity(intent);
+			startNewActivity(AboutActivity.class);
 			break;
 		}
 		case 200: {
-			Intent intent = new Intent(ListRequestActivity.this,
-					SettingsActivity.class);
-			startActivity(intent);
+			startNewActivity(SettingsActivity.class);
 			break;
 		}
 		case 300: {
-			Intent intent = new Intent(ListRequestActivity.this,
-					AddEditRequestActivity.class);
-			startActivity(intent);
+			startNewActivity(AddEditRequestActivity.class);
 			break;
 		}
 		case 400: {
-			Intent intent = new Intent(ListRequestActivity.this,
-					UploadActivity.class);
-			startActivity(intent);
+			startNewActivity(UploadActivity.class);
 			break;
 		}
 		default:
@@ -137,6 +138,11 @@ public class ListRequestActivity extends Activity {
 		}
 
 		return true;
+	}
+	
+	private void startNewActivity(Class l) {
+		Intent intent = new Intent(this, l);
+		startActivity(intent);
 	}
 
 }
