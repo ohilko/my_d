@@ -33,7 +33,10 @@
     <string name="errorMessageEmptyField">Вам необходимо указать файл в поле "Путь"</string>
     <string name="errorTitleIsNotFile">Не xml файл</string>
     <string name="errorMessageIsNotFile">Вам необходимо указать xml файл в поле "Путь"</string>
+    <string name="errorTitleFileNotExist">Нет такого файла</string>
+    <string name="errorMessageFileNotExist">Вам необходимо указать существующий файл в поле "Путь"</string>
     <string name="errorButton">Ок</string>
+    
     
     <string-array name="cloud_array">
         <item>Dropbox</item>

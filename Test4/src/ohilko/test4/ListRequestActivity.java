@@ -15,10 +15,8 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class ListRequestActivity extends Activity {
 
-	private ArrayList<HashMap<String, Object>> myBooks;
-	private static final String BOOKKEY = "bookname";
-	private static final String PRICEKEY = "bookprice";
-	private static final String PRICEKEY1 = "bookprice1";
+	public static final String ROW_ID = "row_id";
+	private ArrayList<HashMap<String, Object>> myRequests;
 	private static final String IMGKEY = "iconfromraw";
 	private DatabaseConnector db;
 
@@ -31,68 +29,61 @@ public class ListRequestActivity extends Activity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		ListView listView = (ListView) findViewById(R.id.listView_see);
+
 		db = new DatabaseConnector(this);
 		db.open();
-		Cursor requests = db.getAllRows(DatabaseConnector.TABLE_NAME[2], DatabaseConnector.REQUEST_FIELDS, "date");
-		
-		while (requests.moveToNext()) {
-			
-		}
-		myBooks = new ArrayList<HashMap<String, Object>>();
+
+		myRequests = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> hm;
 
-		hm = new HashMap<String, Object>();
-		hm.put(BOOKKEY, "Коробке");
-		hm.put(PRICEKEY, "какой-то текст");
-		hm.put(PRICEKEY1, "какой-то текст");
-		hm.put(IMGKEY, R.drawable.ic_launcher); // тут мы её добавляем для
-												// отображения
+		Cursor requests = db.getAllRows(DatabaseConnector.TABLE_NAME[2],
+				DatabaseConnector.REQUEST_FIELDS, "date");
 
-		myBooks.add(hm);
+		while (requests.moveToNext()) {
+			hm = new HashMap<String, Object>();
+			Cursor provider = db.getRow(DatabaseConnector.TABLE_NAME[1], "_id",
+					Long.parseLong(requests.getString(1)));
 
-		hm = new HashMap<String, Object>();
-		hm.put(BOOKKEY, "Футболке");
-		hm.put(PRICEKEY, "какой-то текст");
-		hm.put(PRICEKEY1, "какой-то текст");
-		hm.put(IMGKEY, R.drawable.ic_launcher); // тут мы её добавляем для отображения
+			if (provider.moveToFirst()) {
 
-		myBooks.add(hm);
+				hm.put(DatabaseConnector.REQUEST_FIELDS[1],
+						provider.getString(2));
+			}
+			hm.put(DatabaseConnector.REQUEST_FIELDS[2], requests.getString(2));
+			hm.put(DatabaseConnector.REQUEST_FIELDS[3], requests.getString(3));
+			hm.put(IMGKEY, R.drawable.ic_launcher);
 
-		hm = new HashMap<String, Object>();
-		hm.put(BOOKKEY, "Робад");
-		hm.put(PRICEKEY, "какой-то текст");
-		hm.put(PRICEKEY1, "какой-то текст");
-		hm.put(IMGKEY, R.drawable.ic_launcher); // тут мы её добавляем для отображения
+			myRequests.add(hm);
+		}
 
-		myBooks.add(hm);
-
-		hm = new HashMap<String, Object>();
-		hm.put(BOOKKEY, "Еще коробке");
-		hm.put(PRICEKEY, "какой-то текст");
-		hm.put(PRICEKEY1, "какой-то текст");
-		hm.put(IMGKEY, R.drawable.ic_launcher);
-
-		myBooks.add(hm);
-
-		SimpleAdapter adapter = new SimpleAdapter(this, myBooks, R.layout.row,
-				new String[] { BOOKKEY, PRICEKEY, PRICEKEY1, IMGKEY },
+		SimpleAdapter adapter = new SimpleAdapter(this, myRequests,
+				R.layout.row, new String[] {
+						DatabaseConnector.REQUEST_FIELDS[1],
+						DatabaseConnector.REQUEST_FIELDS[2],
+						DatabaseConnector.REQUEST_FIELDS[3], IMGKEY },
 				new int[] { R.id.textview_provider, R.id.textview_date,
 						R.id.textview_allcost, R.id.imageView_list });
 
 		listView.setAdapter(adapter);
 		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-		
+
 		listView.setOnItemClickListener(viewRequestListener);
+
+		db.close();
 	}
-	
+
 	OnItemClickListener viewRequestListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
-			startNewActivity(ViewRequestActivity.class);
+			Intent viewContact = new Intent(ListRequestActivity.this,
+					ViewRequestActivity.class);
+
+			viewContact.putExtra(ROW_ID, arg3);
+			startActivity(viewContact);
 		}
 	};
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.sd, menu);
@@ -139,7 +130,7 @@ public class ListRequestActivity extends Activity {
 
 		return true;
 	}
-	
+
 	private void startNewActivity(Class l) {
 		Intent intent = new Intent(this, l);
 		startActivity(intent);

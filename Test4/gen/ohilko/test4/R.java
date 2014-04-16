@@ -91,10 +91,12 @@ public final class R {
         public static final int connect=0x7f050008;
         public static final int download_SD=0x7f050003;
         public static final int download_cloud=0x7f050004;
-        public static final int errorButton=0x7f05001f;
+        public static final int errorButton=0x7f050021;
         public static final int errorMessageEmptyField=0x7f05001c;
+        public static final int errorMessageFileNotExist=0x7f050020;
         public static final int errorMessageIsNotFile=0x7f05001e;
         public static final int errorTitleEmptyField=0x7f05001b;
+        public static final int errorTitleFileNotExist=0x7f05001f;
         public static final int errorTitleIsNotFile=0x7f05001d;
         public static final int hello_world=0x7f050002;
         public static final int label_allCost=0x7f050014;
@@ -112,13 +114,13 @@ public final class R {
         public static final int some_hint_password=0x7f05000b;
         public static final int some_hint_path=0x7f050009;
         public static final int title_activity_about=0x7f05000c;
-        public static final int title_activity_add_edit_request=0x7f050020;
+        public static final int title_activity_add_edit_request=0x7f050022;
         public static final int title_activity_cloud=0x7f05000e;
         public static final int title_activity_list_request=0x7f050010;
         public static final int title_activity_sd=0x7f05000d;
         public static final int title_activity_settings=0x7f05000f;
-        public static final int title_activity_upload=0x7f050021;
-        public static final int title_activity_view_request=0x7f050022;
+        public static final int title_activity_upload=0x7f050023;
+        public static final int title_activity_view_request=0x7f050024;
     }
     public static final class style {
         /** 

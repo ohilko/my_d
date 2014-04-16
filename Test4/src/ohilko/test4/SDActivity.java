@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ohilko.test4.OpenFileDialog.OnFileSelectedListener;
+import ohilko.test4.db.DatabaseConnector;
 
 import android.os.Bundle;
 import android.os.Environment;
@@ -34,6 +35,8 @@ public class SDActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
+			final DatabaseConnector db = new DatabaseConnector(SDActivity.this);
+			
 			if (path.getText().toString().equals("")) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						SDActivity.this);
@@ -43,12 +46,24 @@ public class SDActivity extends Activity {
 				builder.setPositiveButton(R.string.errorButton, null);
 				builder.show();
 			} else {
-				File f = new File(path.getText().toString());
-				int dotPosition = f.getName().lastIndexOf(".");
-				String fileExtention = f.getName().substring(dotPosition);
-				if (f.isFile() && fileExtention.equals(".xml")) {
-					ParserXmlFile parser = new ParserXmlFile(f, SDActivity.this);
-					parser.parser();
+				String[] splitPath = path.getText().toString().split("\\.");
+				if (splitPath[1].equals("xml")) {
+					File f = new File(path.getText().toString());
+					if (f.exists()) {
+						ParserXmlFile parser = new ParserXmlFile(f, SDActivity.this, db );
+						parser.parser();
+						
+						startNewActivity(ListRequestActivity.class);
+						
+					} else {
+						AlertDialog.Builder builder = new AlertDialog.Builder(
+								SDActivity.this);
+
+						builder.setTitle(R.string.errorTitleFileNotExist);
+						builder.setMessage(R.string.errorMessageFileNotExist);
+						builder.setPositiveButton(R.string.errorButton, null);
+						builder.show();
+					}
 				} else {
 					AlertDialog.Builder builder = new AlertDialog.Builder(
 							SDActivity.this);
@@ -59,8 +74,6 @@ public class SDActivity extends Activity {
 					builder.show();
 				}
 			}
-			
-			startNewActivity(ListRequestActivity.class);
 		}
 	};
 

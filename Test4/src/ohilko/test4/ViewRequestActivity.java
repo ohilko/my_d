@@ -1,9 +1,11 @@
 package ohilko.test4;
 
+import ohilko.test4.db.DatabaseConnector;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -14,196 +16,158 @@ import android.widget.*;
 
 public class ViewRequestActivity extends Activity {
 
+	private long rowID;
+	private DatabaseConnector db;
+	private static int COUNTCOLOMNS = 5;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_request);
-		
+
+		Bundle extras = getIntent().getExtras();
+		rowID = extras.getLong(ListRequestActivity.ROW_ID);
+
+		db = new DatabaseConnector(this);
+		db.open();
+
 		ActionBar actionBar = getActionBar();
-	    actionBar.setDisplayHomeAsUpEnabled(true);
-	    
-	    /**Программно создать таблицу*/
-	    
-	    TableLayout table = new TableLayout(this);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 
-        table.setStretchAllColumns(true);
-        table.setShrinkAllColumns(true);
+		TableLayout table = createTable();
 
-        TableRow rowTitle = new TableRow(this);
-        rowTitle.setGravity(Gravity.CENTER_HORIZONTAL);
+		setContentView(table);
 
-        TableRow rowDayLabels = new TableRow(this);
-        TableRow rowHighs = new TableRow(this);
-        TableRow rowLows = new TableRow(this);
-        TableRow rowConditions = new TableRow(this);
-        rowConditions.setGravity(Gravity.CENTER);
+		db.close();
 
-        TextView empty = new TextView(this);
+	}
 
-        // title column/row
-        TextView title = new TextView(this);
-        title.setText("Java Weather Table");
+	private TableLayout createTable() {
+		TableLayout table = new TableLayout(this);
 
-        title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-        title.setGravity(Gravity.CENTER);
-        title.setTypeface(Typeface.SERIF, Typeface.BOLD);
+		table.setStretchAllColumns(true);
+		table.setShrinkAllColumns(true);
 
-        TableRow.LayoutParams params = new TableRow.LayoutParams();
-        params.span = 6;
+		TableRow rowTitleRequest = new TableRow(this);
+		rowTitleRequest.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        rowTitle.addView(title, params);
+		TableRow rowProvider = new TableRow(this);
+		TableRow rowDate = new TableRow(this);
+		TableRow rowAllCost = new TableRow(this);
 
-        // labels column
-        TextView highsLabel = new TextView(this);
-        highsLabel.setText("Day High");
-        highsLabel.setTypeface(Typeface.DEFAULT_BOLD);
+		TableRow rowTitleProducts = new TableRow(this);
+		rowTitleRequest.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        TextView lowsLabel = new TextView(this);
-        lowsLabel.setText("Day Low");
-        lowsLabel.setTypeface(Typeface.DEFAULT_BOLD);
+		TableRow rowProductsLabel = new TableRow(this);
 
-        TextView conditionsLabel = new TextView(this);
-        conditionsLabel.setText("Conditions");
-        conditionsLabel.setTypeface(Typeface.DEFAULT_BOLD);
+		TextView title = new TextView(this);
+		title.setText("Detailed view of the request");
 
-        rowDayLabels.addView(empty);
-        rowHighs.addView(highsLabel);
-        rowLows.addView(lowsLabel);
-        rowConditions.addView(conditionsLabel);
+		title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+		title.setGravity(Gravity.CENTER);
+		title.setTypeface(Typeface.SERIF, Typeface.BOLD);
 
-        // day 1 column
-        TextView day1Label = new TextView(this);
-        day1Label.setText("Feb 7");
-        day1Label.setTypeface(Typeface.SERIF, Typeface.BOLD);
+		TableRow.LayoutParams params = new TableRow.LayoutParams();
+		params.span = COUNTCOLOMNS;
 
-        TextView day1High = new TextView(this);
-        day1High.setText("28°F");
-        day1High.setGravity(Gravity.CENTER_HORIZONTAL);
+		rowTitleRequest.addView(title, params);
 
-        TextView day1Low = new TextView(this);
-        day1Low.setText("15°F");
-        day1Low.setGravity(Gravity.CENTER_HORIZONTAL);
+		addViewInRow(rowProvider, "Provider", Typeface.DEFAULT_BOLD, Gravity.CENTER);
 
-        ImageView day1Conditions = new ImageView(this);
-        day1Conditions.setImageResource(R.drawable.ic_launcher);
+		addViewInRow(rowDate, "Date", Typeface.DEFAULT_BOLD, Gravity.CENTER);
+		
+		addViewInRow(rowAllCost, "All cost", Typeface.DEFAULT_BOLD, Gravity.CENTER);
+		
+		addViewInRow(rowTitleProducts, "Products", Typeface.DEFAULT_BOLD, Gravity.CENTER);
+		
+		addViewInRow(rowProductsLabel, "№", null, Gravity.CENTER_HORIZONTAL);
 
-        rowDayLabels.addView(day1Label);
-        rowHighs.addView(day1High);
-        rowLows.addView(day1Low);
-        rowConditions.addView(day1Conditions);
+		for (int i = 3; i < COUNTCOLOMNS + 1; i++) {
+			addViewInRow(rowProductsLabel, DatabaseConnector.PRODUCT_FIELDS[i], null, Gravity.CENTER_HORIZONTAL);
+		}
+		addViewInRow(rowProductsLabel, "Amount", null, Gravity.CENTER_HORIZONTAL);
 
-        // day2 column
-        TextView day2Label = new TextView(this);
-        day2Label.setText("Feb 8");
-        day2Label.setTypeface(Typeface.SERIF, Typeface.BOLD);
+		Cursor request = db.getRow(DatabaseConnector.TABLE_NAME[2], "_id", rowID);
 
-        TextView day2High = new TextView(this);
-        day2High.setText("26°F");
-        day2High.setGravity(Gravity.CENTER_HORIZONTAL);
+		if (request.moveToFirst()) {
+			Cursor provider = db.getRow(DatabaseConnector.TABLE_NAME[1], "_id",
+					Long.parseLong(request.getString(1)));
 
-        TextView day2Low = new TextView(this);
-        day2Low.setText("14°F");
-        day2Low.setGravity(Gravity.CENTER_HORIZONTAL);
+			if (provider.moveToFirst()) {
+				addViewInRow(rowProvider, provider.getString(2), null, Gravity.CENTER_HORIZONTAL);
+			}
 
-        ImageView day2Conditions = new ImageView(this);
-        day2Conditions.setImageResource(R.drawable.ic_launcher);
+			addViewInRow(rowDate, provider.getString(2), null, Gravity.CENTER_HORIZONTAL);
 
-        rowDayLabels.addView(day2Label);
-        rowHighs.addView(day2High);
-        rowLows.addView(day2Low);
-        rowConditions.addView(day2Conditions);
+			addViewInRow(rowAllCost, provider.getString(3), null, Gravity.CENTER_HORIZONTAL);
+			
+			table.addView(rowTitleRequest);
+			table.addView(rowProvider);
+			table.addView(rowDate);
+			table.addView(rowAllCost);
+			table.addView(rowTitleProducts);
+			table.addView(rowProductsLabel);
 
-        // day3 column
-        TextView day3Label = new TextView(this);
-        day3Label.setText("Feb 9");
-        day3Label.setTypeface(Typeface.SERIF, Typeface.BOLD);
+			Cursor request_products = db.getRow(
+					DatabaseConnector.TABLE_NAME[4], "request_id",
+					Long.parseLong(request.getString(1)));
+			
+			while (request_products.moveToNext()) {
+				Cursor product = db.getRow(DatabaseConnector.TABLE_NAME[0], "_id",
+						Long.parseLong(request_products.getString(2)));
+				int i = 1;
+				
+				if(product.moveToFirst()) {
+					TableRow rowProduct = new TableRow(this);
+					addViewInRow(rowProduct, getString(i), null, Gravity.CENTER_HORIZONTAL);
+					addViewInRow(rowProduct, product.getString(3), null, Gravity.CENTER_HORIZONTAL);
+					addViewInRow(rowProduct, product.getString(4), null, Gravity.CENTER_HORIZONTAL);
+					addViewInRow(rowProduct, product.getString(5), null, Gravity.CENTER_HORIZONTAL);
+					addViewInRow(rowProduct, request_products.getString(3), null, Gravity.CENTER_HORIZONTAL);
 
-        TextView day3High = new TextView(this);
-        day3High.setText("23°F");
-        day3High.setGravity(Gravity.CENTER_HORIZONTAL);
+					table.addView(rowProduct);
+				}
+				
+			}
+		}
+		
+		
+		
+		return table;
+	}
 
-        TextView day3Low = new TextView(this);
-        day3Low.setText("3°F");
-        day3Low.setGravity(Gravity.CENTER_HORIZONTAL);
-
-        ImageView day3Conditions = new ImageView(this);
-        day3Conditions.setImageResource(R.drawable.ic_launcher);
-
-        rowDayLabels.addView(day3Label);
-        rowHighs.addView(day3High);
-        rowLows.addView(day3Low);
-        rowConditions.addView(day3Conditions);
-
-        // day4 column
-        TextView day4Label = new TextView(this);
-        day4Label.setText("Feb 10");
-        day4Label.setTypeface(Typeface.SERIF, Typeface.BOLD);
-
-        TextView day4High = new TextView(this);
-        day4High.setText("17°F");
-        day4High.setGravity(Gravity.CENTER_HORIZONTAL);
-
-        TextView day4Low = new TextView(this);
-        day4Low.setText("5°F");
-        day4Low.setGravity(Gravity.CENTER_HORIZONTAL);
-
-        ImageView day4Conditions = new ImageView(this);
-        day4Conditions.setImageResource(R.drawable.ic_launcher);
-
-        rowDayLabels.addView(day4Label);
-        rowHighs.addView(day4High);
-        rowLows.addView(day4Low);
-        rowConditions.addView(day4Conditions);
-
-        // day5 column
-        TextView day5Label = new TextView(this);
-        day5Label.setText("Feb 11");
-        day5Label.setTypeface(Typeface.SERIF, Typeface.BOLD);
-
-        TextView day5High = new TextView(this);
-        day5High.setText("19°F");
-        day5High.setGravity(Gravity.CENTER_HORIZONTAL);
-
-        TextView day5Low = new TextView(this);
-        day5Low.setText("6°F");
-        day5Low.setGravity(Gravity.CENTER_HORIZONTAL);
-
-        ImageView day5Conditions = new ImageView(this);
-        day5Conditions.setImageResource(R.drawable.ic_launcher);
-
-        rowDayLabels.addView(day5Label);
-        rowHighs.addView(day5High);
-        rowLows.addView(day5Low);
-        rowConditions.addView(day5Conditions);
-
-        table.addView(rowTitle);
-        table.addView(rowDayLabels);
-        table.addView(rowHighs);
-        table.addView(rowLows);
-        table.addView(rowConditions);
-
-        setContentView(table);
-	
+	private void addViewInRow(TableRow rowName, String text, Typeface tf, int gravity) {
+		TextView label = new TextView(this);
+		label.setText(text);
+		if (tf != null) {
+			label.setTypeface(tf);
+		}
+		label.setGravity(gravity);
+		
+		rowName.addView(label);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.sd, menu);
-		
-		SubMenu sm = menu.addSubMenu (Menu.FIRST, 1, 1, "SubMenu").setIcon(android.R.drawable.ic_dialog_dialer);
+
+		SubMenu sm = menu.addSubMenu(Menu.FIRST, 1, 1, "SubMenu").setIcon(
+				android.R.drawable.ic_dialog_dialer);
 		menu.findItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		
-		sm.add(Menu.FIRST, 300, 300, "Delete").setIcon(android.R.drawable.ic_menu_delete);
-		sm.add(Menu.FIRST, 400, 400, "Edit requests").setIcon(android.R.drawable.ic_menu_edit);;
+
+		sm.add(Menu.FIRST, 300, 300, "Delete").setIcon(
+				android.R.drawable.ic_menu_delete);
+		sm.add(Menu.FIRST, 400, 400, "Edit requests").setIcon(
+				android.R.drawable.ic_menu_edit);
+		;
 		sm.add(Menu.FIRST, 100, 100, "About...");
 		sm.add(Menu.FIRST, 200, 200, "Settings...");
-		
+
 		return true;
 	}
-	
-	@Override 
-	public boolean onOptionsItemSelected(MenuItem item) 
-	{
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home: {
 			finish();
@@ -222,7 +186,7 @@ public class ViewRequestActivity extends Activity {
 			break;
 		}
 		case 300: {
-			/**Удаление заявки*/
+			/** Удаление заявки */
 			break;
 		}
 		case 400: {
@@ -234,7 +198,7 @@ public class ViewRequestActivity extends Activity {
 		default:
 			return false;
 		}
-		
+
 		return true;
 	}
 
