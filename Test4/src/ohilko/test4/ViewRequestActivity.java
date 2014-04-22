@@ -19,6 +19,7 @@ public class ViewRequestActivity extends Activity {
 	private long rowID;
 	private DatabaseConnector db;
 	private static int COUNTCOLOMNS = 5;
+	private Cursor request;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +31,20 @@ public class ViewRequestActivity extends Activity {
 
 		db = new DatabaseConnector(this);
 		db.open();
-
+		
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
-		TableLayout table = createTable();
+		TableLayout[] tables = createTable();
 
-		setContentView(table);
-
+		setContentView(tables[0]);
+		setContentView(tables[1]);
 		db.close();
-
 	}
 
-	private TableLayout createTable() {
+	private TableLayout[] createTable() {
 		TableLayout table = new TableLayout(this);
+		TableLayout tableProducts = new TableLayout(this);
 
 		table.setStretchAllColumns(true);
 		table.setShrinkAllColumns(true);
@@ -68,17 +69,27 @@ public class ViewRequestActivity extends Activity {
 		title.setTypeface(Typeface.SERIF, Typeface.BOLD);
 
 		TableRow.LayoutParams params = new TableRow.LayoutParams();
-		params.span = COUNTCOLOMNS;
+		params.span = 2;
 
 		rowTitleRequest.addView(title, params);
+		
+		TableRow.LayoutParams paramsProduct = new TableRow.LayoutParams();
+		params.span = 5;
+		
+		TextView titleProducts = new TextView(this);
+		titleProducts.setText("Products");
+
+		titleProducts.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
+		titleProducts.setGravity(Gravity.CENTER);
+		titleProducts.setTypeface(Typeface.SERIF, Typeface.BOLD);
+		
+		rowTitleProducts.addView(titleProducts, paramsProduct);
 
 		addViewInRow(rowProvider, "Provider", Typeface.DEFAULT_BOLD, Gravity.CENTER);
 
 		addViewInRow(rowDate, "Date", Typeface.DEFAULT_BOLD, Gravity.CENTER);
 		
 		addViewInRow(rowAllCost, "All cost", Typeface.DEFAULT_BOLD, Gravity.CENTER);
-		
-		addViewInRow(rowTitleProducts, "Products", Typeface.DEFAULT_BOLD, Gravity.CENTER);
 		
 		addViewInRow(rowProductsLabel, "¹", null, Gravity.CENTER_HORIZONTAL);
 
@@ -87,7 +98,7 @@ public class ViewRequestActivity extends Activity {
 		}
 		addViewInRow(rowProductsLabel, "Amount", null, Gravity.CENTER_HORIZONTAL);
 
-		Cursor request = db.getRow(DatabaseConnector.TABLE_NAME[2], "_id", rowID);
+		request = db.getRow(DatabaseConnector.TABLE_NAME[2], "_id", rowID);
 
 		if (request.moveToFirst()) {
 			Cursor provider = db.getRow(DatabaseConnector.TABLE_NAME[1], "_id",
@@ -97,16 +108,16 @@ public class ViewRequestActivity extends Activity {
 				addViewInRow(rowProvider, provider.getString(2), null, Gravity.CENTER_HORIZONTAL);
 			}
 
-			addViewInRow(rowDate, provider.getString(2), null, Gravity.CENTER_HORIZONTAL);
+			addViewInRow(rowDate, request.getString(2), null, Gravity.CENTER_HORIZONTAL);
 
-			addViewInRow(rowAllCost, provider.getString(3), null, Gravity.CENTER_HORIZONTAL);
+			addViewInRow(rowAllCost, request.getString(3), null, Gravity.CENTER_HORIZONTAL);
 			
 			table.addView(rowTitleRequest);
 			table.addView(rowProvider);
 			table.addView(rowDate);
 			table.addView(rowAllCost);
-			table.addView(rowTitleProducts);
-			table.addView(rowProductsLabel);
+			tableProducts.addView(rowTitleProducts);
+			tableProducts.addView(rowProductsLabel);
 
 			Cursor request_products = db.getRow(
 					DatabaseConnector.TABLE_NAME[4], "request_id",
@@ -125,15 +136,15 @@ public class ViewRequestActivity extends Activity {
 					addViewInRow(rowProduct, product.getString(5), null, Gravity.CENTER_HORIZONTAL);
 					addViewInRow(rowProduct, request_products.getString(3), null, Gravity.CENTER_HORIZONTAL);
 
-					table.addView(rowProduct);
+					tableProducts.addView(rowProduct);
 				}
 				
 			}
 		}
 		
 		
-		
-		return table;
+		TableLayout[] tables = {table, tableProducts};
+		return tables;
 	}
 
 	private void addViewInRow(TableRow rowName, String text, Typeface tf, int gravity) {
@@ -157,9 +168,11 @@ public class ViewRequestActivity extends Activity {
 
 		sm.add(Menu.FIRST, 300, 300, "Delete").setIcon(
 				android.R.drawable.ic_menu_delete);
-		sm.add(Menu.FIRST, 400, 400, "Edit requests").setIcon(
-				android.R.drawable.ic_menu_edit);
-		;
+		if (request.moveToFirst() && request.getString(4).equals("false")) {
+			sm.add(Menu.FIRST, 400, 400, "Edit requests").setIcon(
+					android.R.drawable.ic_menu_edit);
+		}
+		
 		sm.add(Menu.FIRST, 100, 100, "About...");
 		sm.add(Menu.FIRST, 200, 200, "Settings...");
 
@@ -175,7 +188,7 @@ public class ViewRequestActivity extends Activity {
 		}
 		case 100: {
 			Intent intent = new Intent(ViewRequestActivity.this,
-					ListRequestActivity.class);
+					AboutActivity.class);
 			startActivity(intent);
 			break;
 		}
@@ -192,6 +205,7 @@ public class ViewRequestActivity extends Activity {
 		case 400: {
 			Intent intent = new Intent(ViewRequestActivity.this,
 					AddEditRequestActivity.class);
+			intent.putExtra(ListRequestActivity.ROW_ID, rowID);
 			startActivity(intent);
 			break;
 		}

@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    
+
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="17" />
@@ -17,7 +17,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
         <activity android:name="com.dropbox.sync.android.DbxAuthActivity" />
         <activity
             android:name="com.dropbox.client2.android.AuthActivity"
@@ -78,6 +77,14 @@
         <activity
             android:name="ohilko.test4.ViewRequestActivity"
             android:label="@string/title_activity_view_request" >
+        </activity>
+        <activity
+            android:name="ohilko.test4.ChooseProviderActivity"
+            android:label="@string/title_activity_choose_provider" >
+        </activity>
+        <activity
+            android:name="ohilko.test4.ChooseProductActivity"
+            android:label="@string/title_activity_choose_product" >
         </activity>
     </application>
 

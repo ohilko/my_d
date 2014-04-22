@@ -32,7 +32,7 @@ public class ListRequestActivity extends Activity {
 
 		db = new DatabaseConnector(this);
 		db.open();
-
+		
 		myRequests = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> hm;
 
@@ -68,7 +68,6 @@ public class ListRequestActivity extends Activity {
 		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 		listView.setOnItemClickListener(viewRequestListener);
-
 		db.close();
 	}
 

@@ -12,7 +12,7 @@ public class DatabaseConnector {
 	public static final String[] PROVIDER_FIELDS = { "_id", "ID", "name",
 			"address", "phone" };
 	public static final String[] REQUEST_FIELDS = { "_id", "provider_id",
-			"date", "allCost" };
+			"date", "allCost", "isUnloaded" };
 	public static final String[] REQUEST_PRODUCT_FIELDS = { "_id",
 			"request_id", "product_id", "amount" };
 	public static final String[] PRODUCT_CHILD_FIELDS = { "_id", "product_id",
@@ -66,9 +66,12 @@ public class DatabaseConnector {
 	}
 
 	public void deleteRow(String table_name, long id) {
-		open();
-		database.delete(table_name, "_id=" + id, null);
-		close();
+		try {
+			open();
+			database.delete(table_name, "_id=" + id, null);
+		} finally {
+			close();
+		}
 	}
 
 	public void deleteAllRows(String table_name) {
@@ -82,15 +85,22 @@ public class DatabaseConnector {
 
 	public Cursor getAllRows(String table_name, String[] table_fields,
 			String sort_field) {
-		Cursor res = database.query(table_name, table_fields, null, null, null,
-				null, sort_field);
+		Cursor res = null;
+
+		res = database.query(table_name, table_fields, null, null, null, null,
+				sort_field);
+
 		return res;
 
 	}
 
 	public Cursor getRow(String table_name, String field_name, long id) {
-		return database.query(table_name, null, field_name + "=" + id, null, null, null,
-				null);
+		Cursor res = null;
+
+		res = database.query(table_name, null, field_name + "=" + id, null,
+				null, null, null);
+
+		return res;
 	}
 
 	private static class DatabaseOpenHelper extends SQLiteOpenHelper {

@@ -19,7 +19,6 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_list_request">ListRequestActivity</string>
     <string name="activity_see_no_items">No requests to display</string>
-    
     <string name="label_date">Data</string>
     <string name="label_provider">Provider</string>
     <string name="label_allCost">All cost</string>
@@ -36,8 +35,7 @@
     <string name="errorTitleFileNotExist">Нет такого файла</string>
     <string name="errorMessageFileNotExist">Вам необходимо указать существующий файл в поле "Путь"</string>
     <string name="errorButton">Ок</string>
-    
-    
+
     <string-array name="cloud_array">
         <item>Dropbox</item>
         <item>Google Drive</item>
@@ -46,5 +44,7 @@
     <string name="title_activity_add_edit_request">AddEditRequestActivity</string>
     <string name="title_activity_upload">UploadActivity</string>
     <string name="title_activity_view_request">ViewRequestActivity</string>
+    <string name="title_activity_choose_provider">ChooseProviderActivity</string>
+    <string name="title_activity_choose_product">ChooseProductActivity</string>
 
 </resources>
