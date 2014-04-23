@@ -42,7 +42,6 @@ public class ParserXmlFile {
 						&& parser.getName().equals(
 								DatabaseConnector.TABLE_NAME[0])) {
 					parser.next();
-					parser.next();
 					parsePart(parser, db, DatabaseConnector.PRODUCT_FIELDS,
 							DatabaseConnector.TABLE_NAME[0]);
 
@@ -50,7 +49,6 @@ public class ParserXmlFile {
 				if (parser.getEventType() == XmlPullParser.START_TAG
 						&& parser.getName().equals(
 								DatabaseConnector.TABLE_NAME[1])) {
-					parser.next();
 					parser.next();
 					parsePart(parser, db, DatabaseConnector.PROVIDER_FIELDS,
 							DatabaseConnector.TABLE_NAME[1]);
@@ -69,24 +67,33 @@ public class ParserXmlFile {
 			String[] fields, String table_name) {
 		try {
 			String field_name = "";
+			int j = 1;
 			String[] data = new String[fields.length - 1];
+
 			for (int i = 0; i < data.length; i++) {
 				data[i] = "";
 			}
 
-			for (int i = 1; i < fields.length; i++) {
+			while (true) {
+				if (parser.getName() != null
+						&& parser.getName().equals(table_name)) {
+					break;
+				}
+				
+				if (j == fields.length) {
+					break;
+				}
+				
 				if (parser.getEventType() == XmlPullParser.START_TAG) {
 					field_name = parser.getName();
-					parser.next();
 				}
 
 				if (parser.getEventType() == XmlPullParser.TEXT
-						&& field_name.equals(fields[i])) {
-					data[i - 1] = parser.getText();
+						&& field_name.equals(fields[j])) {
+					data[j - 1] = parser.getText();
+					j++;
 				}
 
-				parser.next();
-				parser.next();
 				parser.next();
 			}
 			db.insertRow(table_name, fields, data);

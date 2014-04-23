@@ -65,7 +65,7 @@ public class ListRequestActivity extends Activity {
 						R.id.textview_allcost, R.id.imageView_list });
 
 		listView.setAdapter(adapter);
-		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+//		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 		listView.setOnItemClickListener(viewRequestListener);
 		db.close();

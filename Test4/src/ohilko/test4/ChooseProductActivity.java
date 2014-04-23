@@ -1,5 +1,8 @@
 package ohilko.test4;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import ohilko.test4.db.DatabaseConnector;
 import android.os.Bundle;
 import android.app.Activity;
@@ -12,17 +15,15 @@ import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.SimpleAdapter;
 import android.widget.SearchView.OnQueryTextListener;
 
-public class ChooseProductActivity extends Activity implements
-		OnQueryTextListener {
+public class ChooseProductActivity extends Activity {
 
 	public static final String PRODUCTS_ID = "products_id";
 	ListView lv;
-	private CursorAdapter requestAdapter;
-
-	String temp[] = { "Gplus", "Facebook", "Instagram", "Linkdin", "Pintrest",
-			"Twitter", "Snapchat", "Skype" };
+	private ArrayList<HashMap<String, Object>> myProducts;
+	private DatabaseConnector db;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +43,39 @@ public class ChooseProductActivity extends Activity implements
 		}
 		
 		lv = (ListView) findViewById(R.id.listView1);
-
-		// String[] from = new String[] { "name", "unitMeasurement" };
-		// int[] to = new int[] { R.id.text1, R.id.text2 };
-		// requestAdapter = new SimpleCursorAdapter(ChooseProductActivity.this,
-		// R.layout.request_list_item, null, from, to);
-		// lv.setAdapter(requestAdapter);
+		
 		lv.setAdapter(new ArrayAdapter<String>(getApplicationContext(),
-				android.R.layout.simple_list_item_1, prs));
+				android.R.layout.simple_list_item_multiple_choice, prs));
 		lv.setTextFilterEnabled(true);
+		
+		
+		myProducts = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> hm;
+
+		while (products.moveToNext()) {
+			hm = new HashMap<String, Object>();
+
+			hm.put(DatabaseConnector.PRODUCT_FIELDS[3], products.getString(3));
+//			hm.put(DatabaseConnector.PRODUCT_FIELDS[4], products.getString(4));
+//			hm.put(DatabaseConnector.PRODUCT_FIELDS[5], products.getString(5));
+			hm.put("checkbox", false);
+
+			myProducts.add(hm);
+		}
+
+//		SimpleAdapter adapter = new SimpleAdapter(this, myProducts,
+//				R.layout.row_add_product, new String[] {
+//						DatabaseConnector.PRODUCT_FIELDS[3],
+////						DatabaseConnector.PRODUCT_FIELDS[4],
+////						DatabaseConnector.PRODUCT_FIELDS[5], 
+//						"checkbox" },
+//				new int[] { R.id.textView_name, 
+////				R.id.textView_um,
+////						R.id.textView_price, 
+//						R.id.checkBox_choice });
+//
+//		lv.setAdapter(adapter);
+//		lv.setTextFilterEnabled(true);
 
 		db.close();
 	}
@@ -66,27 +91,26 @@ public class ChooseProductActivity extends Activity implements
 		searchView.setSearchableInfo(searchManager
 				.getSearchableInfo(getComponentName()));
 		searchView.setSubmitButtonEnabled(true);
-		searchView.setOnQueryTextListener(this);
-
+		searchView.setOnQueryTextListener(new OnQueryTextListener() {
+			
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				// TODO Auto-generated method stub
+				if (TextUtils.isEmpty(query)) {
+					lv.clearTextFilter();
+				} else {
+					lv.setFilterText(query.toString());
+				}
+				return true;
+			}
+			
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				// TODO Auto-generated method stub
+				return true;
+			}
+		});
+		
 		return super.onCreateOptionsMenu(menu);
 	}
-
-	@Override
-	public boolean onQueryTextChange(String newText) {
-		// this is your adapter that will be filtered
-		if (TextUtils.isEmpty(newText)) {
-			lv.clearTextFilter();
-		} else {
-			lv.setFilterText(newText.toString());
-		}
-
-		return true;
-	}
-
-	@Override
-	public boolean onQueryTextSubmit(String query) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

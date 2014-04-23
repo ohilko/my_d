@@ -30,7 +30,7 @@ public final class R {
         public static final int list=0x7f020003;
     }
     public static final class id {
-        public static final int action_settings=0x7f090031;
+        public static final int action_settings=0x7f090032;
         public static final int button1=0x7f09001a;
         public static final int button_add_product=0x7f09000b;
         public static final int button_browse=0x7f090020;
@@ -47,7 +47,7 @@ public final class R {
         public static final int imageView_list=0x7f09002e;
         public static final int listView1=0x7f090016;
         public static final int listView_see=0x7f09001b;
-        public static final int menu_item_search=0x7f090032;
+        public static final int menu_item_search=0x7f090033;
         public static final int ofd_current_path=0x7f090026;
         public static final int ofd_go_up=0x7f090027;
         public static final int ofd_item_bar=0x7f090029;
@@ -70,6 +70,7 @@ public final class R {
         public static final int textView_label_allCost=0x7f090008;
         public static final int textView_label_date=0x7f090005;
         public static final int textView_label_provider=0x7f090002;
+        public static final int textView_name=0x7f090031;
         public static final int textView_product_amount=0x7f090013;
         public static final int textView_product_name=0x7f090010;
         public static final int textView_product_number=0x7f09000f;

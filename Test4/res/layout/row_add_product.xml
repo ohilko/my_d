@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/textview_provider"
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:gravity="left" />
+        android:id="@+id/textView_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="13dp"
+        android:text="ertw" />
+
+    <!-- <TextView
+        android:id="@+id/textView_um"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="dxzsvc" />
 
     <TextView
-        android:id="@+id/textview_date"
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:ellipsize="marquee"
-        android:singleLine="true" />
+        android:id="@+id/textView_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="33dp"
+        android:layout_toLeftOf="@+id/checkBox_choice"
+        android:text="xv" /> -->
 
-    <TextView
-        android:id="@+id/textview_allcost"
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:ellipsize="marquee"
-        android:singleLine="true" />
+    <!-- <CheckBox
+        android:id="@+id/checkBox_choice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false" /> -->
 
-</LinearLayout>
+</RelativeLayout>
