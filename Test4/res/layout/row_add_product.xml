@@ -10,31 +10,30 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="13dp"
-        android:text="ertw" />
+        android:text="Name" />
 
-    <!-- <TextView
+    <TextView
         android:id="@+id/textView_um"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="dxzsvc" />
+        android:text="UM" />
 
     <TextView
         android:id="@+id/textView_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="33dp"
-        android:layout_toLeftOf="@+id/checkBox_choice"
-        android:text="xv" /> -->
+        android:layout_marginLeft="63dp"
+        android:layout_toRightOf="@+id/textView_um"
+        android:text="Price" />
 
-    <!-- <CheckBox
-        android:id="@+id/checkBox_choice"
+    <TextView
+        android:id="@+id/textView_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:focusable="false"
-        android:focusableInTouchMode="false" /> -->
+        android:text="Amount" />
 
 </RelativeLayout>

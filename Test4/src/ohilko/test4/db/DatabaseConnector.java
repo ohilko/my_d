@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase.*;
 public class DatabaseConnector {
 	private static final String DATABASE_NAME = "db_diplom";
 	public static final String[] PRODUCT_FIELDS = { "_id", "ID",
-			"ID_directory", "name", "unitMeasurement", "price" };
+			"ID_directory", "name", "unitMeasurement", "price", "isDirectory" };
 	public static final String[] PROVIDER_FIELDS = { "_id", "ID", "name",
 			"address", "phone" };
 	public static final String[] REQUEST_FIELDS = { "_id", "provider_id",
@@ -84,7 +84,7 @@ public class DatabaseConnector {
 	}
 
 	public Cursor getAllRows(String table_name, String[] table_fields,
-			String sort_field) {
+			String sort_field, String selection) {
 		Cursor res = null;
 
 		res = database.query(table_name, table_fields, null, null, null, null,
@@ -94,10 +94,19 @@ public class DatabaseConnector {
 
 	}
 
-	public Cursor getRow(String table_name, String field_name, long id) {
+	public Cursor getRowById(String table_name, long id) {
 		Cursor res = null;
 
-		res = database.query(table_name, null, field_name + "=" + id, null,
+		res = database.query(table_name, null, "_id=" + id, null,
+				null, null, null);
+
+		return res;
+	}
+	
+	public Cursor getRow(String table_name, String[] table_fields, String field_name, String data) {
+		Cursor res = null;
+
+		res = database.query(table_name, table_fields, field_name + "='" + data + "'", null,
 				null, null, null);
 
 		return res;

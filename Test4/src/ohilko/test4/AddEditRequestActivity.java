@@ -1,10 +1,7 @@
 package ohilko.test4;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import ohilko.test4.db.DatabaseConnector;
 import android.os.Bundle;
@@ -35,21 +32,23 @@ public class AddEditRequestActivity extends Activity {
 	private TableLayout table_request_products;
 	private String allCost;
 	private long[] productId;
-	
+
 	OnClickListener providerClicked = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
-			Intent Request = new Intent(AddEditRequestActivity.this, ChooseProviderActivity.class);
+			Intent Request = new Intent(AddEditRequestActivity.this,
+					ChooseProviderActivity.class);
 			startActivity(Request);
 		}
 	};
-	
+
 	OnClickListener addProductClicked = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
-			Intent Request = new Intent(AddEditRequestActivity.this, ChooseProductActivity.class);
+			Intent Request = new Intent(AddEditRequestActivity.this,
+					ChooseProductActivity.class);
 			startActivity(Request);
 		}
 	};
@@ -58,47 +57,48 @@ public class AddEditRequestActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_edit_request);
-		
+
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		
+
 		TextView provider_name = (TextView) findViewById(R.id.editText_provider);
 		TextView date = (TextView) findViewById(R.id.editText_date);
 		TextView allCost_all = (TextView) findViewById(R.id.textView_allCost);
 		Button buttonAddProduct = (Button) findViewById(R.id.button_add_product);
-		
+
 		buttonAddProduct.setOnClickListener(addProductClicked);
-		
-		Date date1 =  new Date();
-		
+
+		Date date1 = new Date();
+
 		SimpleDateFormat formatter1 = new SimpleDateFormat("dd.MM.yyyy");
 		String date_time = formatter1.format(date1);
-		
+
 		date.setText(date_time);
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			rowID = extras.getLong(ListRequestActivity.ROW_ID);
-			provider_name.setText(extras.getString(ChooseProviderActivity.PROVIDER_NAME));
+			provider_name.setText(extras
+					.getString(ChooseProviderActivity.PROVIDER_NAME));
 			providerID = extras.getLong(ChooseProviderActivity.PROVIDER_ID);
 			allCost = extras.getString("");
-//			allCost_all.setText(allCost);
+			// allCost_all.setText(allCost);
 			productId = extras.getLongArray(ChooseProductActivity.PRODUCTS_ID);
 		} else {
 			rowID = 0;
 		}
 
 		table_request_products = (TableLayout) findViewById(R.id.table_request_products_label);
-		
+
 		provider_name.setOnClickListener(providerClicked);
 
 		db = new DatabaseConnector(this);
 		db.open();
-		
+
 		db.close();
 	}
 
 	private void addRequest() {
-		
+
 	}
 
 	private TableLayout createTable() {
@@ -164,11 +164,12 @@ public class AddEditRequestActivity extends Activity {
 				Gravity.CENTER_HORIZONTAL);
 
 		if (rowID != 0) {
-			request = db.getRow(DatabaseConnector.TABLE_NAME[2], "_id", rowID);
+			request = db.getRowById(DatabaseConnector.TABLE_NAME[2], rowID);
 
 			if (request.moveToFirst()) {
-				Cursor provider = db.getRow(DatabaseConnector.TABLE_NAME[1],
-						"_id", Long.parseLong(request.getString(1)));
+				Cursor provider = db.getRowById(
+						DatabaseConnector.TABLE_NAME[1],
+						Long.parseLong(request.getString(1)));
 
 				if (provider.moveToFirst()) {
 					addViewInRowEdit(rowProvider, provider.getString(2), null,
@@ -189,12 +190,12 @@ public class AddEditRequestActivity extends Activity {
 				tableProducts.addView(rowProductsLabel);
 
 				Cursor request_products = db.getRow(
-						DatabaseConnector.TABLE_NAME[4], "request_id",
-						Long.parseLong(request.getString(1)));
+						DatabaseConnector.TABLE_NAME[4], null, "request_id",
+						request.getString(1));
 
 				while (request_products.moveToNext()) {
-					Cursor product = db.getRow(DatabaseConnector.TABLE_NAME[0],
-							"_id",
+					Cursor product = db.getRowById(
+							DatabaseConnector.TABLE_NAME[0],
 							Long.parseLong(request_products.getString(2)));
 					int i = 1;
 

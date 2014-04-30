@@ -18,71 +18,53 @@ import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.SearchView.OnQueryTextListener;
 
-public class ChooseProductActivity extends Activity {
+public class ChooseProductActivity extends Activity implements
+		SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
 	public static final String PRODUCTS_ID = "products_id";
-	ListView lv;
-	private ArrayList<HashMap<String, Object>> myProducts;
+	ListView myListView;
 	private DatabaseConnector db;
+	private ArrayList<Product> listproduct;
+	private MyAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_choose_product);
-		DatabaseConnector db = new DatabaseConnector(this);
+
+		listproduct = new ArrayList<Product>();
+
+		loadData(listproduct);
+
+		myListView = (ListView) findViewById(R.id.listView_products);
+		adapter = new MyAdapter(this, listproduct);
+		myListView.setAdapter(adapter);
+
+	}
+
+	private void loadData(ArrayList<Product> listproduct) {
+		db = new DatabaseConnector(this);
 		db.open();
-		Cursor products = db.getAllRows(DatabaseConnector.TABLE_NAME[0],
-				DatabaseConnector.PRODUCT_FIELDS, "name");
+		Cursor products = db.getRow(DatabaseConnector.TABLE_NAME[0], DatabaseConnector.PRODUCT_FIELDS,
+				"isDirectory", "false");
 
 		String[] prs = new String[products.getCount()];
 		int i = 0;
 
 		while (products.moveToNext()) {
+			Product product = new Product(products.getString(3),
+					products.getString(4), products.getString(5), "0");
+			listproduct.add(product);
+
 			prs[i] = products.getString(3);
 			i++;
 		}
-		
-		lv = (ListView) findViewById(R.id.listView1);
-		
-		lv.setAdapter(new ArrayAdapter<String>(getApplicationContext(),
-				android.R.layout.simple_list_item_multiple_choice, prs));
-		lv.setTextFilterEnabled(true);
-		
-		
-		myProducts = new ArrayList<HashMap<String, Object>>();
-		HashMap<String, Object> hm;
-
-		while (products.moveToNext()) {
-			hm = new HashMap<String, Object>();
-
-			hm.put(DatabaseConnector.PRODUCT_FIELDS[3], products.getString(3));
-//			hm.put(DatabaseConnector.PRODUCT_FIELDS[4], products.getString(4));
-//			hm.put(DatabaseConnector.PRODUCT_FIELDS[5], products.getString(5));
-			hm.put("checkbox", false);
-
-			myProducts.add(hm);
-		}
-
-//		SimpleAdapter adapter = new SimpleAdapter(this, myProducts,
-//				R.layout.row_add_product, new String[] {
-//						DatabaseConnector.PRODUCT_FIELDS[3],
-////						DatabaseConnector.PRODUCT_FIELDS[4],
-////						DatabaseConnector.PRODUCT_FIELDS[5], 
-//						"checkbox" },
-//				new int[] { R.id.textView_name, 
-////				R.id.textView_um,
-////						R.id.textView_price, 
-//						R.id.checkBox_choice });
-//
-//		lv.setAdapter(adapter);
-//		lv.setTextFilterEnabled(true);
 
 		db.close();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.choose_product, menu);
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		SearchView searchView = (SearchView) menu.findItem(
@@ -91,26 +73,26 @@ public class ChooseProductActivity extends Activity {
 		searchView.setSearchableInfo(searchManager
 				.getSearchableInfo(getComponentName()));
 		searchView.setSubmitButtonEnabled(true);
-		searchView.setOnQueryTextListener(new OnQueryTextListener() {
-			
-			@Override
-			public boolean onQueryTextSubmit(String query) {
-				// TODO Auto-generated method stub
-				if (TextUtils.isEmpty(query)) {
-					lv.clearTextFilter();
-				} else {
-					lv.setFilterText(query.toString());
-				}
-				return true;
-			}
-			
-			@Override
-			public boolean onQueryTextChange(String newText) {
-				// TODO Auto-generated method stub
-				return true;
-			}
-		});
-		
+		searchView.setOnQueryTextListener(this);
+
 		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onClose() {
+		adapter.filterData("");
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextChange(String newText) {
+		adapter.filterData(newText);
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextSubmit(String query) {
+		adapter.filterData(query);
+		return false;
 	}
 }

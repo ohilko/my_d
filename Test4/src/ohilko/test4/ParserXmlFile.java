@@ -68,22 +68,29 @@ public class ParserXmlFile {
 		try {
 			String field_name = "";
 			int j = 1;
-			String[] data = new String[fields.length - 1];
+			String[] data = new String[fields.length-1];
 
 			for (int i = 0; i < data.length; i++) {
 				data[i] = "";
 			}
 
+			if (table_name.equals("Product")) {
+				data[data.length - 1] = "false";
+			}
+
 			while (true) {
 				if (parser.getName() != null
 						&& parser.getName().equals(table_name)) {
+					if (table_name.equals("Product") && j == 4) {
+						data[data.length - 1] = "true";
+					}
 					break;
 				}
 				
 				if (j == fields.length) {
 					break;
 				}
-				
+
 				if (parser.getEventType() == XmlPullParser.START_TAG) {
 					field_name = parser.getName();
 				}

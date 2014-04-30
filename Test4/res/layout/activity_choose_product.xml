@@ -9,11 +9,9 @@
     tools:context=".ChooseProductActivity" >
 
     <ListView
-        android:id="@+id/listView1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp">
-    </ListView>
+        android:id="@+id/listView_products"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"/>
 
 </RelativeLayout>

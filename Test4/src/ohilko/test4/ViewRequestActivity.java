@@ -31,7 +31,7 @@ public class ViewRequestActivity extends Activity {
 
 		db = new DatabaseConnector(this);
 		db.open();
-		
+
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -72,46 +72,53 @@ public class ViewRequestActivity extends Activity {
 		params.span = 2;
 
 		rowTitleRequest.addView(title, params);
-		
+
 		TableRow.LayoutParams paramsProduct = new TableRow.LayoutParams();
 		params.span = 5;
-		
+
 		TextView titleProducts = new TextView(this);
 		titleProducts.setText("Products");
 
 		titleProducts.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
 		titleProducts.setGravity(Gravity.CENTER);
 		titleProducts.setTypeface(Typeface.SERIF, Typeface.BOLD);
-		
+
 		rowTitleProducts.addView(titleProducts, paramsProduct);
 
-		addViewInRow(rowProvider, "Provider", Typeface.DEFAULT_BOLD, Gravity.CENTER);
+		addViewInRow(rowProvider, "Provider", Typeface.DEFAULT_BOLD,
+				Gravity.CENTER);
 
 		addViewInRow(rowDate, "Date", Typeface.DEFAULT_BOLD, Gravity.CENTER);
-		
-		addViewInRow(rowAllCost, "All cost", Typeface.DEFAULT_BOLD, Gravity.CENTER);
-		
+
+		addViewInRow(rowAllCost, "All cost", Typeface.DEFAULT_BOLD,
+				Gravity.CENTER);
+
 		addViewInRow(rowProductsLabel, "¹", null, Gravity.CENTER_HORIZONTAL);
 
 		for (int i = 3; i < COUNTCOLOMNS + 1; i++) {
-			addViewInRow(rowProductsLabel, DatabaseConnector.PRODUCT_FIELDS[i], null, Gravity.CENTER_HORIZONTAL);
+			addViewInRow(rowProductsLabel, DatabaseConnector.PRODUCT_FIELDS[i],
+					null, Gravity.CENTER_HORIZONTAL);
 		}
-		addViewInRow(rowProductsLabel, "Amount", null, Gravity.CENTER_HORIZONTAL);
+		addViewInRow(rowProductsLabel, "Amount", null,
+				Gravity.CENTER_HORIZONTAL);
 
-		request = db.getRow(DatabaseConnector.TABLE_NAME[2], "_id", rowID);
+		request = db.getRowById(DatabaseConnector.TABLE_NAME[2], rowID);
 
 		if (request.moveToFirst()) {
-			Cursor provider = db.getRow(DatabaseConnector.TABLE_NAME[1], "_id",
+			Cursor provider = db.getRowById(DatabaseConnector.TABLE_NAME[1],
 					Long.parseLong(request.getString(1)));
 
 			if (provider.moveToFirst()) {
-				addViewInRow(rowProvider, provider.getString(2), null, Gravity.CENTER_HORIZONTAL);
+				addViewInRow(rowProvider, provider.getString(2), null,
+						Gravity.CENTER_HORIZONTAL);
 			}
 
-			addViewInRow(rowDate, request.getString(2), null, Gravity.CENTER_HORIZONTAL);
+			addViewInRow(rowDate, request.getString(2), null,
+					Gravity.CENTER_HORIZONTAL);
 
-			addViewInRow(rowAllCost, request.getString(3), null, Gravity.CENTER_HORIZONTAL);
-			
+			addViewInRow(rowAllCost, request.getString(3), null,
+					Gravity.CENTER_HORIZONTAL);
+
 			table.addView(rowTitleRequest);
 			table.addView(rowProvider);
 			table.addView(rowDate);
@@ -120,41 +127,46 @@ public class ViewRequestActivity extends Activity {
 			tableProducts.addView(rowProductsLabel);
 
 			Cursor request_products = db.getRow(
-					DatabaseConnector.TABLE_NAME[4], "request_id",
-					Long.parseLong(request.getString(1)));
-			
+					DatabaseConnector.TABLE_NAME[4], null, "request_id",
+					request.getString(1));
+
 			while (request_products.moveToNext()) {
-				Cursor product = db.getRow(DatabaseConnector.TABLE_NAME[0], "_id",
+				Cursor product = db.getRowById(DatabaseConnector.TABLE_NAME[0],
 						Long.parseLong(request_products.getString(2)));
 				int i = 1;
-				
-				if(product.moveToFirst()) {
+
+				if (product.moveToFirst()) {
 					TableRow rowProduct = new TableRow(this);
-					addViewInRow(rowProduct, getString(i), null, Gravity.CENTER_HORIZONTAL);
-					addViewInRow(rowProduct, product.getString(3), null, Gravity.CENTER_HORIZONTAL);
-					addViewInRow(rowProduct, product.getString(4), null, Gravity.CENTER_HORIZONTAL);
-					addViewInRow(rowProduct, product.getString(5), null, Gravity.CENTER_HORIZONTAL);
-					addViewInRow(rowProduct, request_products.getString(3), null, Gravity.CENTER_HORIZONTAL);
+					addViewInRow(rowProduct, getString(i), null,
+							Gravity.CENTER_HORIZONTAL);
+					addViewInRow(rowProduct, product.getString(3), null,
+							Gravity.CENTER_HORIZONTAL);
+					addViewInRow(rowProduct, product.getString(4), null,
+							Gravity.CENTER_HORIZONTAL);
+					addViewInRow(rowProduct, product.getString(5), null,
+							Gravity.CENTER_HORIZONTAL);
+					addViewInRow(rowProduct, request_products.getString(3),
+							null, Gravity.CENTER_HORIZONTAL);
 
 					tableProducts.addView(rowProduct);
 				}
-				
+
 			}
 		}
-		
-		
-		TableLayout[] tables = {table, tableProducts};
+
+		TableLayout[] tables = { table, tableProducts };
 		return tables;
 	}
 
-	private void addViewInRow(TableRow rowName, String text, Typeface tf, int gravity) {
+	private void addViewInRow(TableRow rowName, String text, Typeface tf,
+			int gravity) {
 		TextView label = new TextView(this);
 		label.setText(text);
 		if (tf != null) {
 			label.setTypeface(tf);
 		}
 		label.setGravity(gravity);
-		
+
 		rowName.addView(label);
 	}
 
@@ -172,7 +184,7 @@ public class ViewRequestActivity extends Activity {
 			sm.add(Menu.FIRST, 400, 400, "Edit requests").setIcon(
 					android.R.drawable.ic_menu_edit);
 		}
-		
+
 		sm.add(Menu.FIRST, 100, 100, "About...");
 		sm.add(Menu.FIRST, 200, 200, "Settings...");
 

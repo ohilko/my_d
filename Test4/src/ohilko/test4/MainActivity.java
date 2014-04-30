@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
 		db.open();
 		
 		if (db.getAllRows(DatabaseConnector.TABLE_NAME[0],
-				DatabaseConnector.PRODUCT_FIELDS, null).moveToFirst()) {
+				DatabaseConnector.PRODUCT_FIELDS, null, null).moveToFirst()) {
 		setContentView(R.layout.activity_main_with_load_button);
 
 		downloadSD = (Button) findViewById(R.id.download_SD);

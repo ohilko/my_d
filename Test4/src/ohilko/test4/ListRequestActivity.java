@@ -32,16 +32,16 @@ public class ListRequestActivity extends Activity {
 
 		db = new DatabaseConnector(this);
 		db.open();
-		
+
 		myRequests = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> hm;
 
 		Cursor requests = db.getAllRows(DatabaseConnector.TABLE_NAME[2],
-				DatabaseConnector.REQUEST_FIELDS, "date");
+				DatabaseConnector.REQUEST_FIELDS, "date", null);
 
 		while (requests.moveToNext()) {
 			hm = new HashMap<String, Object>();
-			Cursor provider = db.getRow(DatabaseConnector.TABLE_NAME[1], "_id",
+			Cursor provider = db.getRowById(DatabaseConnector.TABLE_NAME[1],
 					Long.parseLong(requests.getString(1)));
 
 			if (provider.moveToFirst()) {
@@ -65,7 +65,7 @@ public class ListRequestActivity extends Activity {
 						R.id.textview_allcost, R.id.imageView_list });
 
 		listView.setAdapter(adapter);
-//		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		// listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 		listView.setOnItemClickListener(viewRequestListener);
 		db.close();
