@@ -8,14 +8,18 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SearchView.OnQueryTextListener;
 
 public class ChooseProductActivity extends Activity implements
@@ -39,9 +43,19 @@ public class ChooseProductActivity extends Activity implements
 		myListView = (ListView) findViewById(R.id.listView_products);
 		adapter = new MyAdapter(this, listproduct);
 		myListView.setAdapter(adapter);
+		myListView.setOnItemClickListener(setAmountListener);
 
 	}
 
+	OnItemClickListener setAmountListener = new OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+				long id) {
+			
+			listproduct.get(position);
+		}
+	};
+	
 	private void loadData(ArrayList<Product> listproduct) {
 		db = new DatabaseConnector(this);
 		db.open();
