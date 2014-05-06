@@ -12,6 +12,38 @@
         android:id="@+id/listView_products"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/button_add_products"
+        android:layout_centerHorizontal="true" >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/button_add_products"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/listView_products"
+        android:text="Add products" />
+
+    <TextView
+        android:id="@+id/textView_sum_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button_add_products"
+        android:layout_alignBottom="@+id/button_add_products"
+        android:layout_alignLeft="@+id/listView_products"
+        android:text="Sum" />
+
+    <TextView
+        android:id="@+id/textView_sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView_sum_label"
+        android:layout_alignBottom="@+id/textView_sum_label"
+        android:layout_marginLeft="39dp"
+        android:layout_toRightOf="@+id/textView_sum_label"
+        android:text="0" />
 
 </RelativeLayout>

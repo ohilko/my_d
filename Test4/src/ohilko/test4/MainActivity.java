@@ -1,5 +1,6 @@
 package ohilko.test4;
 
+import ohilko.test4.R;
 import ohilko.test4.db.DatabaseConnector;
 import android.app.Activity;
 import android.view.View.OnClickListener;

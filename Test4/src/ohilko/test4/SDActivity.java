@@ -3,8 +3,11 @@ package ohilko.test4;
 import java.io.File;
 import java.io.IOException;
 
-import ohilko.test4.OpenFileDialog.OnFileSelectedListener;
+import ohilko.test4.R;
 import ohilko.test4.db.DatabaseConnector;
+import ohilko.test4.db.ParserXmlFile;
+import ohilko.test4.file.OpenFileDialog;
+import ohilko.test4.file.OpenFileDialog.OnFileSelectedListener;
 
 import android.os.Bundle;
 import android.os.Environment;

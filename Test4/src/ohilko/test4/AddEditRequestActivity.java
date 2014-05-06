@@ -3,6 +3,7 @@ package ohilko.test4;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import ohilko.test4.R;
 import ohilko.test4.db.DatabaseConnector;
 import android.os.Bundle;
 import android.app.ActionBar;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 
 public class AddEditRequestActivity extends Activity {
 
+	protected static final int ADD_PRODUCT = 27;
 	private long rowID;
 	private long providerID;
 	private DatabaseConnector db;
@@ -31,7 +33,8 @@ public class AddEditRequestActivity extends Activity {
 	private Cursor request;
 	private TableLayout table_request_products;
 	private String allCost;
-	private long[] productId;
+	private long[] productsId;
+	private String[] productsAmount;
 
 	OnClickListener providerClicked = new OnClickListener() {
 
@@ -47,9 +50,9 @@ public class AddEditRequestActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			Intent Request = new Intent(AddEditRequestActivity.this,
+			Intent request = new Intent(AddEditRequestActivity.this,
 					ChooseProductActivity.class);
-			startActivity(Request);
+			startActivityForResult(request, ADD_PRODUCT);
 		}
 	};
 
@@ -82,7 +85,7 @@ public class AddEditRequestActivity extends Activity {
 			providerID = extras.getLong(ChooseProviderActivity.PROVIDER_ID);
 			allCost = extras.getString("");
 			// allCost_all.setText(allCost);
-			productId = extras.getLongArray(ChooseProductActivity.PRODUCTS_ID);
+
 		} else {
 			rowID = 0;
 		}
@@ -97,6 +100,18 @@ public class AddEditRequestActivity extends Activity {
 		db.close();
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == ADD_PRODUCT) {
+			if (resultCode == RESULT_OK) {
+				productsId = data.getExtras().getLongArray(ChooseProductActivity.PRODUCTS_ID);
+				productsAmount = data.getExtras().getStringArray(ChooseProductActivity.PRODUCTS_AMOUNT); 
+			}
+		}
+	}
+	
 	private void addRequest() {
 
 	}

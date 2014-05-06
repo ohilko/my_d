@@ -1,5 +1,6 @@
 package ohilko.test4;
 
+import ohilko.test4.R;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
