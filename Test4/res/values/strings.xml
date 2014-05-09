@@ -30,6 +30,7 @@
     <string name="ofd_go_up_text">Назад</string>
     <string name="errorTitleEmptyField">Пустое поле</string>
     <string name="errorMessageEmptyField">Вам необходимо указать файл в поле "Путь"</string>
+    <string name="errorMessageEmptyFields">Вам необходимо заполнить все поля</string>
     <string name="errorTitleIsNotFile">Не xml файл</string>
     <string name="errorMessageIsNotFile">Вам необходимо указать xml файл в поле "Путь"</string>
     <string name="errorTitleFileNotExist">Нет такого файла</string>

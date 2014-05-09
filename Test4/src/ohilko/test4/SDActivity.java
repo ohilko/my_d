@@ -55,6 +55,7 @@ public class SDActivity extends Activity {
 					if (f.exists()) {
 						ParserXmlFile parser = new ParserXmlFile(f, SDActivity.this, db );
 						parser.parser();
+						parser.addInTableProductChild();
 						
 						startNewActivity(ListRequestActivity.class);
 						

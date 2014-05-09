@@ -11,9 +11,10 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="52dp"
         android:layout_toRightOf="@+id/textView_amount"
-        android:ems="10" 
-        android:inputType="number">
+        android:ems="10"
+        android:inputType="number" >
 
+        <requestFocus />
     </EditText>
 
     <TextView

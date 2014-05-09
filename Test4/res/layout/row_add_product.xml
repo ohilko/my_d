@@ -10,6 +10,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="13dp"
+        android:gravity="left"
         android:text="Name" />
 
     <TextView
@@ -17,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:gravity="left"
         android:text="UM" />
 
     <TextView
@@ -26,6 +28,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="63dp"
         android:layout_toRightOf="@+id/textView_um"
+        android:gravity="left"
         android:text="Price" />
 
     <TextView
@@ -34,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:gravity="left"
         android:text="Amount" />
 
 </RelativeLayout>

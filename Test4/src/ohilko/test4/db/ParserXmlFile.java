@@ -2,10 +2,10 @@ package ohilko.test4.db;
 
 import java.io.*;
 
-
 import org.xmlpull.v1.*;
 
 import android.content.Context;
+import android.database.Cursor;
 
 public class ParserXmlFile {
 	private File file;
@@ -62,16 +62,37 @@ public class ParserXmlFile {
 		}
 	}
 
-	public void addInTableProductChild () {
-	//TODO: write with part of project	
+	public void addInTableProductChild() {
+
+		db.open();
+		Cursor directories = db.getRow(DatabaseConnector.TABLE_NAME[0],
+				DatabaseConnector.PRODUCT_FIELDS,
+				new String[] { "isDirectory" }, new String[] { "true" });
+
+
+		while (directories.moveToNext()) {
+			db.open();
+			Cursor products_child = db.getRow(DatabaseConnector.TABLE_NAME[0],
+					DatabaseConnector.PRODUCT_FIELDS,
+					new String[] { "ID_directory" },
+					new String[] { directories.getString(1) });
+
+			while (products_child.moveToNext()) {
+				db.insertRow(
+						DatabaseConnector.TABLE_NAME[3],
+						DatabaseConnector.PRODUCT_CHILD_FIELDS,
+						new String[] { directories.getString(0),
+								products_child.getString(0), products_child.getString(6) });
+			}
+		}
 	}
-	
+
 	private void parsePart(XmlPullParser parser, DatabaseConnector db,
 			String[] fields, String table_name) {
 		try {
 			String field_name = "";
 			int j = 1;
-			String[] data = new String[fields.length-1];
+			String[] data = new String[fields.length - 1];
 
 			for (int i = 0; i < data.length; i++) {
 				data[i] = "";
@@ -89,7 +110,7 @@ public class ParserXmlFile {
 					}
 					break;
 				}
-				
+
 				if (j == fields.length) {
 					break;
 				}

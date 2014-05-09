@@ -28,6 +28,11 @@ public class MyAdapterProduct extends BaseAdapter {
 		this.originalListProducts.addAll(list);
 	}
 
+	public void remove(int position) {
+		listProducts.remove(position);
+		notifyDataSetChanged();
+	}
+	
 	@Override
 	public int getCount() {
 		return listProducts.size();

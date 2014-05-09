@@ -31,7 +31,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/editText_provider"
+                android:id="@+id/textView_provider_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -95,7 +95,7 @@
                 android:id="@+id/textView_products"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_span="5"
+                android:layout_span="4"
                 android:text="Products:"
                 android:textStyle="bold" />
         </TableRow>
@@ -108,45 +108,51 @@
             android:background="#7fc300" >
 
             <TextView
-                android:id="@+id/textView_product_number"
-                android:gravity="left"
-                android:text="№"
-                android:textStyle="bold" />
-
-            <TextView
                 android:id="@+id/textView_product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="63dp"
                 android:gravity="left"
                 android:text="Name"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView_product_um"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:gravity="left"
                 android:text="UM"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView_product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/textView_product_um"
                 android:gravity="left"
                 android:text="Price"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView_product_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
                 android:gravity="left"
                 android:text="Amount"
                 android:textStyle="bold" />
         </TableRow>
-    </TableLayout>
 
-    <TableLayout
-        android:id="@+id/table_request_products"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/button_save"
-        android:layout_below="@+id/table_request_products_label"
-        android:shrinkColumns="*"
-        android:stretchColumns="*" >
+        <ListView
+            android:id="@+id/list_request_products"
+            android:layout_width="match_parent"
+            android:layout_height="296dp" >
+        </ListView>
     </TableLayout>
 
     <Button
@@ -155,7 +161,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/table_request_products"
+        android:layout_alignRight="@+id/table_request_products_label"
         android:layout_below="@+id/table_add_edit_request"
         android:text="Add product" />
 
@@ -164,9 +170,9 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/table_request_products"
+        android:layout_alignLeft="@+id/table_request_products_label"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/table_request_products"
+        android:layout_alignRight="@+id/table_request_products_label"
         android:text="Save" />
 
 </RelativeLayout>

@@ -128,8 +128,9 @@ public class ViewRequestActivity extends Activity {
 			tableProducts.addView(rowProductsLabel);
 
 			Cursor request_products = db.getRow(
-					DatabaseConnector.TABLE_NAME[4], null, "request_id",
-					request.getString(1));
+					DatabaseConnector.TABLE_NAME[4], null,
+					new String[] { "request_id" },
+					new String[] { request.getString(1) });
 
 			while (request_products.moveToNext()) {
 				Cursor product = db.getRowById(DatabaseConnector.TABLE_NAME[0],

@@ -16,7 +16,7 @@ public class DatabaseConnector {
 	public static final String[] REQUEST_PRODUCT_FIELDS = { "_id",
 			"request_id", "product_id", "amount" };
 	public static final String[] PRODUCT_CHILD_FIELDS = { "_id", "product_id",
-			"product_child_id" };
+			"product_child_id", "isChildDirectory" };
 	public static final String[] TABLE_NAME = { "Product", "Provider",
 			"Request", "Product_child", "Request_product" };
 
@@ -97,17 +97,25 @@ public class DatabaseConnector {
 	public Cursor getRowById(String table_name, long id) {
 		Cursor res = null;
 
-		res = database.query(table_name, null, "_id=" + id, null,
-				null, null, null);
+		res = database.query(table_name, null, "_id=" + id, null, null, null,
+				null);
 
 		return res;
 	}
-	
-	public Cursor getRow(String table_name, String[] table_fields, String field_name, String data) {
-		Cursor res = null;
 
-		res = database.query(table_name, table_fields, field_name + "='" + data + "'", null,
-				null, null, null);
+	public Cursor getRow(String table_name, String[] table_fields,
+			String[] field_name_for_select, String[] data) {
+		Cursor res = null;
+		String select = "";
+		for (int i = 0; i < field_name_for_select.length - 1; i++) {
+			select += field_name_for_select[i] + "='" + data[i] + "' and ";
+
+		}
+		select += field_name_for_select[field_name_for_select.length - 1]
+				+ "='" + data[field_name_for_select.length - 1] + "'";
+
+		res = database.query(table_name, table_fields, select, null, null,
+				null, null);
 
 		return res;
 	}

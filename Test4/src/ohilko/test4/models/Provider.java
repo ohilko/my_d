@@ -6,6 +6,14 @@ public class Provider {
 	private String address;
 	private String phone;
 
+	public Provider(String name, String address, String phone, long id) {
+		super();
+		this.address = address;
+		this.name = name;
+		this.phone = phone;
+		this.id = id;
+	}
+	
 	public long getId() {
 		return id;
 	}
