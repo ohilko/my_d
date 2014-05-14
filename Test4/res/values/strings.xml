@@ -36,7 +36,11 @@
     <string name="errorTitleFileNotExist">Нет такого файла</string>
     <string name="errorMessageFileNotExist">Вам необходимо указать существующий файл в поле "Путь"</string>
     <string name="errorButton">Ок</string>
-
+    <string name="errorButtonYes">Да</string>
+    <string name="errorButtonNo">Нет</string>
+    <string name="errorTitleDelete">Удаление заявки</string>
+    <string name="errorMessageDeleteRequest">Вы уверены, что хотите удалить заявку?</string>
+    
     <string-array name="cloud_array">
         <item>Dropbox</item>
         <item>Google Drive</item>

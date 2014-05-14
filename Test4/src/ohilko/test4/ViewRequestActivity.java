@@ -1,10 +1,18 @@
 package ohilko.test4;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import ohilko.test4.R;
+import ohilko.test4.adapters.MyAdapterProduct;
 import ohilko.test4.db.DatabaseConnector;
+import ohilko.test4.models.Product;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
@@ -21,155 +29,77 @@ public class ViewRequestActivity extends Activity {
 	private DatabaseConnector db;
 	private static int COUNTCOLOMNS = 5;
 	private Cursor request;
+	private TextView provider_name;
+	private TextView date;
+	private TextView allCost;
+	private ListView list_request_products;
+	private ArrayList<Product> listproduct = new ArrayList<Product>();
+	private MyAdapterProduct adapter;
+	private Cursor request_products;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_request);
 
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+
+		provider_name = (TextView) findViewById(R.id.textView_provider_name);
+		date = (TextView) findViewById(R.id.editText_date);
+		allCost = (TextView) findViewById(R.id.textView_allCost);
+
 		Bundle extras = getIntent().getExtras();
-		rowID = extras.getLong(ListRequestActivity.ROW_ID);
+		if (extras != null) {
+			rowID = extras.getLong(ListRequestActivity.ROW_ID);
+			provider_name.setText(extras
+					.getString(ListRequestActivity.PROVIDER_NAME));
+			date.setText(extras.getString(ListRequestActivity.DATE));
+			allCost.setText(extras.getString(ListRequestActivity.ALL_COST));
+		}
 
 		db = new DatabaseConnector(this);
 		db.open();
 
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
+		request = db.getRowById(DatabaseConnector.TABLE_NAME[2], rowID);
+		if (request.moveToFirst()) {
 
-		TableLayout[] tables = createTable();
+		}
+		list_request_products = (ListView) findViewById(R.id.list_request_products);
 
-		setContentView(tables[0]);
-		setContentView(tables[1]);
+		getProductsForRequest();
+
+		// TableLayout[] tables = createTable();
+		//
+		// setContentView(tables[0]);
+		// setContentView(tables[1]);
 		db.close();
 	}
 
-	private TableLayout[] createTable() {
-		TableLayout table = new TableLayout(this);
-		TableLayout tableProducts = new TableLayout(this);
-
-		table.setStretchAllColumns(true);
-		table.setShrinkAllColumns(true);
-
-		TableRow rowTitleRequest = new TableRow(this);
-		rowTitleRequest.setGravity(Gravity.CENTER_HORIZONTAL);
-
-		TableRow rowProvider = new TableRow(this);
-		TableRow rowDate = new TableRow(this);
-		TableRow rowAllCost = new TableRow(this);
-
-		TableRow rowTitleProducts = new TableRow(this);
-		rowTitleRequest.setGravity(Gravity.CENTER_HORIZONTAL);
-
-		TableRow rowProductsLabel = new TableRow(this);
-
-		TextView title = new TextView(this);
-		title.setText("Detailed view of the request");
-
-		title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-		title.setGravity(Gravity.CENTER);
-		title.setTypeface(Typeface.SERIF, Typeface.BOLD);
-
-		TableRow.LayoutParams params = new TableRow.LayoutParams();
-		params.span = 2;
-
-		rowTitleRequest.addView(title, params);
-
-		TableRow.LayoutParams paramsProduct = new TableRow.LayoutParams();
-		params.span = 5;
-
-		TextView titleProducts = new TextView(this);
-		titleProducts.setText("Products");
-
-		titleProducts.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
-		titleProducts.setGravity(Gravity.CENTER);
-		titleProducts.setTypeface(Typeface.SERIF, Typeface.BOLD);
-
-		rowTitleProducts.addView(titleProducts, paramsProduct);
-
-		addViewInRow(rowProvider, "Provider", Typeface.DEFAULT_BOLD,
-				Gravity.CENTER);
-
-		addViewInRow(rowDate, "Date", Typeface.DEFAULT_BOLD, Gravity.CENTER);
-
-		addViewInRow(rowAllCost, "All cost", Typeface.DEFAULT_BOLD,
-				Gravity.CENTER);
-
-		addViewInRow(rowProductsLabel, "№", null, Gravity.CENTER_HORIZONTAL);
-
-		for (int i = 3; i < COUNTCOLOMNS + 1; i++) {
-			addViewInRow(rowProductsLabel, DatabaseConnector.PRODUCT_FIELDS[i],
-					null, Gravity.CENTER_HORIZONTAL);
-		}
-		addViewInRow(rowProductsLabel, "Amount", null,
-				Gravity.CENTER_HORIZONTAL);
-
-		request = db.getRowById(DatabaseConnector.TABLE_NAME[2], rowID);
-
+	private void getProductsForRequest() {
 		if (request.moveToFirst()) {
-			Cursor provider = db.getRowById(DatabaseConnector.TABLE_NAME[1],
-					Long.parseLong(request.getString(1)));
-
-			if (provider.moveToFirst()) {
-				addViewInRow(rowProvider, provider.getString(2), null,
-						Gravity.CENTER_HORIZONTAL);
-			}
-
-			addViewInRow(rowDate, request.getString(2), null,
-					Gravity.CENTER_HORIZONTAL);
-
-			addViewInRow(rowAllCost, request.getString(3), null,
-					Gravity.CENTER_HORIZONTAL);
-
-			table.addView(rowTitleRequest);
-			table.addView(rowProvider);
-			table.addView(rowDate);
-			table.addView(rowAllCost);
-			tableProducts.addView(rowTitleProducts);
-			tableProducts.addView(rowProductsLabel);
-
-			Cursor request_products = db.getRow(
-					DatabaseConnector.TABLE_NAME[4], null,
+			request_products = db.getRow(DatabaseConnector.TABLE_NAME[4], null,
 					new String[] { "request_id" },
-					new String[] { request.getString(1) });
+					new String[] { Long.toString(request.getLong(0)) });
 
 			while (request_products.moveToNext()) {
 				Cursor product = db.getRowById(DatabaseConnector.TABLE_NAME[0],
 						Long.parseLong(request_products.getString(2)));
-				int i = 1;
 
 				if (product.moveToFirst()) {
-					TableRow rowProduct = new TableRow(this);
-					addViewInRow(rowProduct, getString(i), null,
-							Gravity.CENTER_HORIZONTAL);
-					addViewInRow(rowProduct, product.getString(3), null,
-							Gravity.CENTER_HORIZONTAL);
-					addViewInRow(rowProduct, product.getString(4), null,
-							Gravity.CENTER_HORIZONTAL);
-					addViewInRow(rowProduct, product.getString(5), null,
-							Gravity.CENTER_HORIZONTAL);
-					addViewInRow(rowProduct, request_products.getString(3),
-							null, Gravity.CENTER_HORIZONTAL);
+					Product newProduct = new Product(product.getString(3),
+							product.getString(4), product.getString(5),
+							request_products.getString(3),
+							Long.parseLong(product.getString(0)));
+					listproduct.add(newProduct);
 
-					tableProducts.addView(rowProduct);
 				}
-
 			}
 		}
 
-		TableLayout[] tables = { table, tableProducts };
-		return tables;
-	}
-
-	private void addViewInRow(TableRow rowName, String text, Typeface tf,
-			int gravity) {
-		TextView label = new TextView(this);
-		label.setText(text);
-		if (tf != null) {
-			label.setTypeface(tf);
-		}
-		label.setGravity(gravity);
-
-		rowName.addView(label);
+		adapter = new MyAdapterProduct(this, listproduct);
+		adapter.notifyDataSetChanged();
+		list_request_products.setAdapter(adapter);
 	}
 
 	@Override
@@ -213,13 +143,54 @@ public class ViewRequestActivity extends Activity {
 			break;
 		}
 		case 300: {
-			/** Удаление заявки */
+			AlertDialog.Builder builder = new AlertDialog.Builder(
+					ViewRequestActivity.this);
+
+			builder.setTitle(R.string.errorTitleDelete);
+			builder.setMessage(R.string.errorMessageDeleteRequest);
+			OnClickListener listenerYes = new OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					while (request_products.moveToFirst()) {
+						db.deleteRow(DatabaseConnector.TABLE_NAME[4],
+								Long.parseLong(request_products.getString(0)));
+					}
+					db.deleteRow(DatabaseConnector.TABLE_NAME[2], rowID);
+					startActivity(new Intent(ViewRequestActivity.this,
+							ListRequestActivity.class));
+				}
+			};
+			builder.setPositiveButton(R.string.errorButtonYes, listenerYes);
+			builder.setNegativeButton(R.string.errorButtonNo, null);
+			builder.show();
 			break;
 		}
 		case 400: {
 			Intent intent = new Intent(ViewRequestActivity.this,
 					AddEditRequestActivity.class);
+
+			intent.putExtra(ChooseProviderActivity.PROVIDER_NAME,
+					provider_name.getText());
+			intent.putExtra(ListRequestActivity.DATE, date.getText());
+			intent.putExtra(ListRequestActivity.ALL_COST, allCost.getText());
 			intent.putExtra(ListRequestActivity.ROW_ID, rowID);
+
+			Iterator<Product> iter = listproduct.iterator();
+			long[] productId = new long[listproduct.size()];
+			String[] productAmount = new String[listproduct.size()];
+			int i = 0;
+
+			while (iter.hasNext()) {
+				Product product = iter.next();
+				productId[i] = product.getId();
+				productAmount[i] = product.getAmount();
+				i++;
+			}
+			intent.putExtra(ChooseProductActivity.PRODUCTS_ID, productId);
+			intent.putExtra(ChooseProductActivity.PRODUCTS_AMOUNT,
+					productAmount);
+
 			startActivity(intent);
 			break;
 		}
@@ -229,5 +200,4 @@ public class ViewRequestActivity extends Activity {
 
 		return true;
 	}
-
 }

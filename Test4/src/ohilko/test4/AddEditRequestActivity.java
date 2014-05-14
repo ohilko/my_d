@@ -16,22 +16,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class AddEditRequestActivity extends Activity {
@@ -41,14 +30,12 @@ public class AddEditRequestActivity extends Activity {
 	private long rowID;
 	private long providerID;
 	private DatabaseConnector db;
-	private static int COUNTCOLOMNS = 5;
-	private Cursor request;
 	private ListView list_request_products;
 	private TextView allCost_all;
 	private TextView provider_name;
 	private long[] productsId = null;
 	private String[] productsAmount = null;
-	private ArrayList<Product> listproduct = new ArrayList<Product>();;
+	private ArrayList<Product> listproduct = new ArrayList<Product>();
 	private MyAdapterProduct adapter;
 	private double count = 0;
 	private EditText amount_dialog;
@@ -114,11 +101,50 @@ public class AddEditRequestActivity extends Activity {
 				data[3] = "false";
 
 				if (rowID == 0) {
-					db.insertRow(DatabaseConnector.TABLE_NAME[2],
+					long id = db.insertRow(DatabaseConnector.TABLE_NAME[2],
 							DatabaseConnector.REQUEST_FIELDS, data);
+					if (listproduct.size() != 0) {
+						Iterator<Product> iter = listproduct.iterator();
+						while (iter.hasNext()) {
+							Product product = iter.next();
+
+							String[] dataProduct = new String[3];
+							dataProduct[0] = Long.toString(id);
+							dataProduct[1] = Long.toString(product.getId());
+							dataProduct[2] = product.getAmount();
+							db.insertRow(DatabaseConnector.TABLE_NAME[4],
+									DatabaseConnector.REQUEST_PRODUCT_FIELDS,
+									dataProduct);
+						}
+					}
 				} else {
+					Cursor products_request = db.getRow(
+							DatabaseConnector.TABLE_NAME[4],
+							DatabaseConnector.REQUEST_PRODUCT_FIELDS,
+							new String[] { "request_id" },
+							new String[] { Long.toString(rowID) });
+					while (products_request.moveToFirst()) {
+						db.deleteRow(DatabaseConnector.TABLE_NAME[4],
+								products_request.getLong(0));
+					}
+
 					db.updateRow(rowID, DatabaseConnector.TABLE_NAME[2],
 							DatabaseConnector.REQUEST_FIELDS, data);
+
+					if (listproduct.size() != 0) {
+						Iterator<Product> iter = listproduct.iterator();
+						while (iter.hasNext()) {
+							Product product = iter.next();
+
+							String[] dataProduct = new String[3];
+							dataProduct[0] = Long.toString(rowID);
+							dataProduct[1] = Long.toString(product.getId());
+							dataProduct[2] = product.getAmount();
+							db.insertRow(DatabaseConnector.TABLE_NAME[4],
+									DatabaseConnector.REQUEST_PRODUCT_FIELDS,
+									dataProduct);
+						}
+					}
 				}
 				Intent request = new Intent(AddEditRequestActivity.this,
 						ListRequestActivity.class);
@@ -161,22 +187,37 @@ public class AddEditRequestActivity extends Activity {
 		String date_time = formatter1.format(date1);
 
 		date.setText(date_time);
+
+		db = new DatabaseConnector(this);
+		list_request_products = (ListView) findViewById(R.id.list_request_products);
+		provider_name.setOnClickListener(providerClicked);
+
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			rowID = extras.getLong(ListRequestActivity.ROW_ID);
-			provider_name.setText(extras
-					.getString(ChooseProviderActivity.PROVIDER_NAME));
-
+			if (extras.getString(ChooseProviderActivity.PROVIDER_NAME) != null) {
+				provider_name.setText(extras
+						.getString(ChooseProviderActivity.PROVIDER_NAME));
+			}
+			if (extras.getString(ListRequestActivity.DATE) != null) {
+				date.setText(extras.getString(ListRequestActivity.DATE));
+			}
+			if (extras.getString(ListRequestActivity.ALL_COST) != null) {
+				allCost_all.setText(extras
+						.getString(ListRequestActivity.ALL_COST));
+			}
+			if (extras.getLongArray(ChooseProductActivity.PRODUCTS_ID) != null) {
+				productsId = extras
+						.getLongArray(ChooseProductActivity.PRODUCTS_ID);
+				productsAmount = extras
+						.getStringArray(ChooseProductActivity.PRODUCTS_AMOUNT);
+				db.open();
+				getProductsForRequest();
+				db.close();
+			}
 		} else {
 			rowID = 0;
 		}
-
-		list_request_products = (ListView) findViewById(R.id.list_request_products);
-
-		provider_name.setOnClickListener(providerClicked);
-
-		db = new DatabaseConnector(this);
-
 	}
 
 	@Override
@@ -325,168 +366,6 @@ public class AddEditRequestActivity extends Activity {
 			list_request_products.setAdapter(adapter);
 			list_request_products.setOnItemClickListener(changeAmountClicked);
 		}
-	}
-
-	private void addViewInRow(TableRow rowName, String text, Typeface tf,
-			int gravity) {
-		TextView label = new TextView(this);
-		label.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
-		label.setText(text);
-		if (tf != null) {
-			label.setTypeface(tf);
-		}
-		label.setGravity(gravity);
-
-		rowName.addView(label);
-	}
-
-	private TableLayout createTable() {
-		TableLayout table = new TableLayout(this);
-		TableLayout tableProducts = new TableLayout(this);
-
-		table.setStretchAllColumns(true);
-		table.setShrinkAllColumns(true);
-
-		TableRow rowTitleRequest = new TableRow(this);
-		rowTitleRequest.setGravity(Gravity.CENTER_HORIZONTAL);
-
-		TableRow rowProvider = new TableRow(this);
-		TableRow rowDate = new TableRow(this);
-		TableRow rowAllCost = new TableRow(this);
-
-		TableRow rowTitleProducts = new TableRow(this);
-		rowTitleRequest.setGravity(Gravity.CENTER_HORIZONTAL);
-
-		TableRow rowProductsLabel = new TableRow(this);
-
-		TextView title = new TextView(this);
-		title.setText("Create to request");
-
-		title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-		title.setGravity(Gravity.CENTER);
-		title.setTypeface(Typeface.SERIF, Typeface.BOLD);
-
-		TableRow.LayoutParams params = new TableRow.LayoutParams();
-		params.span = 2;
-
-		rowTitleRequest.addView(title, params);
-
-		TableRow.LayoutParams paramsProduct = new TableRow.LayoutParams();
-		params.span = 5;
-
-		TextView titleProducts = new TextView(this);
-		titleProducts.setText("Products");
-
-		titleProducts.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
-		titleProducts.setGravity(Gravity.CENTER);
-		titleProducts.setTypeface(Typeface.SERIF, Typeface.BOLD);
-
-		rowTitleProducts.addView(titleProducts, paramsProduct);
-
-		rowTitleRequest.addView(title, params);
-
-		addViewInRow(rowProvider, "Provider", Typeface.DEFAULT_BOLD,
-				Gravity.CENTER);
-
-		addViewInRow(rowDate, "Date", Typeface.DEFAULT_BOLD, Gravity.CENTER);
-
-		addViewInRow(rowAllCost, "All cost", Typeface.DEFAULT_BOLD,
-				Gravity.CENTER);
-
-		addViewInRow(rowProductsLabel, "¹", null, Gravity.CENTER_HORIZONTAL);
-
-		for (int i = 3; i < COUNTCOLOMNS + 1; i++) {
-			addViewInRow(rowProductsLabel, DatabaseConnector.PRODUCT_FIELDS[i],
-					null, Gravity.CENTER_HORIZONTAL);
-		}
-		addViewInRow(rowProductsLabel, "Amount", null,
-				Gravity.CENTER_HORIZONTAL);
-
-		if (rowID != 0) {
-			request = db.getRowById(DatabaseConnector.TABLE_NAME[2], rowID);
-
-			if (request.moveToFirst()) {
-				Cursor provider = db.getRowById(
-						DatabaseConnector.TABLE_NAME[1],
-						Long.parseLong(request.getString(1)));
-
-				if (provider.moveToFirst()) {
-					addViewInRowEdit(rowProvider, provider.getString(2), null,
-							Gravity.CENTER_HORIZONTAL);
-				}
-
-				addViewInRowEdit(rowDate, request.getString(2), null,
-						Gravity.CENTER_HORIZONTAL);
-
-				addViewInRowEdit(rowAllCost, request.getString(3), null,
-						Gravity.CENTER_HORIZONTAL);
-
-				table.addView(rowTitleRequest);
-				table.addView(rowProvider);
-				table.addView(rowDate);
-				table.addView(rowAllCost);
-				tableProducts.addView(rowTitleProducts);
-				tableProducts.addView(rowProductsLabel);
-
-				Cursor request_products = db.getRow(
-						DatabaseConnector.TABLE_NAME[4], null,
-						new String[] { "request_id" },
-						new String[] { request.getString(1) });
-
-				while (request_products.moveToNext()) {
-					Cursor product = db.getRowById(
-							DatabaseConnector.TABLE_NAME[0],
-							Long.parseLong(request_products.getString(2)));
-					int i = 1;
-
-					if (product.moveToFirst()) {
-						TableRow rowProduct = new TableRow(this);
-						addViewInRow(rowProduct, getString(i), null,
-								Gravity.CENTER_HORIZONTAL);
-						addViewInRow(rowProduct, product.getString(3), null,
-								Gravity.CENTER_HORIZONTAL);
-						addViewInRow(rowProduct, product.getString(4), null,
-								Gravity.CENTER_HORIZONTAL);
-						addViewInRow(rowProduct, product.getString(5), null,
-								Gravity.CENTER_HORIZONTAL);
-						addViewInRow(rowProduct, request_products.getString(3),
-								null, Gravity.CENTER_HORIZONTAL);
-
-						tableProducts.addView(rowProduct);
-					}
-
-				}
-			}
-		} else {
-			addViewInRowEdit(rowProvider, "", null, Gravity.CENTER_HORIZONTAL);
-
-			addViewInRowEdit(rowDate, "", null, Gravity.CENTER_HORIZONTAL);
-
-			addViewInRowEdit(rowAllCost, "", null, Gravity.CENTER_HORIZONTAL);
-
-			table.addView(rowTitleRequest);
-			table.addView(rowProvider);
-			table.addView(rowDate);
-			table.addView(rowAllCost);
-			tableProducts.addView(rowTitleProducts);
-			tableProducts.addView(rowProductsLabel);
-
-		}
-
-		return table;
-	}
-
-	private void addViewInRowEdit(TableRow rowName, String text, Typeface tf,
-			int gravity) {
-		EditText label = new EditText(this);
-		label.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
-		label.setText(text);
-		if (tf != null) {
-			label.setTypeface(tf);
-		}
-		label.setGravity(gravity);
-
-		rowName.addView(label);
 	}
 
 	@Override

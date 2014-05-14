@@ -3,8 +3,6 @@ package ohilko.test4.adapters;
 import java.util.ArrayList;
 
 import ohilko.test4.R;
-import ohilko.test4.R.id;
-import ohilko.test4.R.layout;
 import ohilko.test4.models.Product;
 
 import android.content.Context;
@@ -77,7 +75,6 @@ public class MyAdapterProduct extends BaseAdapter {
 	}
 
 	public void filterData(String query) {
-
 		query = query.toLowerCase();
 		listProducts.clear();
 

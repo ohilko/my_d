@@ -37,18 +37,20 @@ public class DatabaseConnector {
 			database.close();
 	}
 
-	public void insertRow(String table_name, String[] table_fields,
+	public long insertRow(String table_name, String[] table_fields,
 			String[] data) {
+		long id = -1;
 		ContentValues row = new ContentValues();
 		for (int i = 1; i < table_fields.length; i++) {
 			row.put(table_fields[i], data[i - 1]);
 		}
 		try {
 			open();
-			database.insert(table_name, null, row);
+			id = database.insert(table_name, null, row);
 		} finally {
 			close();
 		}
+		return id;
 	}
 
 	public void updateRow(long id, String table_name, String[] table_fields,

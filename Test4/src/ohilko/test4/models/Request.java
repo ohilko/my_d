@@ -2,9 +2,20 @@ package ohilko.test4.models;
 
 public class Request {
 	private long id;
-	private long providerId;
+	private String providerName;
 	private String date;
 	private String allCost;
+	private int image;
+
+	public Request(String date, String allCost, String providerName, long id,
+			int image) {
+		super();
+		this.allCost = allCost;
+		this.date = date;
+		this.id = id;
+		this.providerName = providerName;
+		this.setImage(image);
+	}
 
 	public long getId() {
 		return id;
@@ -14,12 +25,12 @@ public class Request {
 		this.id = id;
 	}
 
-	public long getProviderId() {
-		return providerId;
+	public String getProviderName() {
+		return providerName;
 	}
 
-	public void setProviderId(long providerId) {
-		this.providerId = providerId;
+	public void setProviderName(String providerName) {
+		this.providerName = providerName;
 	}
 
 	public String getDate() {
@@ -36,6 +47,14 @@ public class Request {
 
 	public void setAllCost(String allCost) {
 		this.allCost = allCost;
+	}
+
+	public int getImage() {
+		return image;
+	}
+
+	public void setImage(int image) {
+		this.image = image;
 	}
 
 }

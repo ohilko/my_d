@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import ohilko.test4.R;
+import ohilko.test4.adapters.MyAdapterRequest;
 import ohilko.test4.db.DatabaseConnector;
+import ohilko.test4.models.Request;
 
 import android.app.*;
 import android.content.Intent;
@@ -17,9 +19,13 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ListRequestActivity extends Activity {
 
 	public static final String ROW_ID = "row_id";
-	private ArrayList<HashMap<String, Object>> myRequests;
-	private static final String IMGKEY = "iconfromraw";
+	public static final String PROVIDER_NAME = "provider_name";
+	public static final String DATE = "date";
+	public static final String ALL_COST = "allCost";
 	private DatabaseConnector db;
+	private MyAdapterRequest adapter;
+	private ArrayList<Request> listRequests;
+	private ListView listView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -29,44 +35,14 @@ public class ListRequestActivity extends Activity {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
-		ListView listView = (ListView) findViewById(R.id.listView_see);
+		listView = (ListView) findViewById(R.id.listView_see);
 
-		db = new DatabaseConnector(this);
-		db.open();
+		listRequests = new ArrayList<Request>();
+		loadData(listRequests);
 
-		myRequests = new ArrayList<HashMap<String, Object>>();
-		HashMap<String, Object> hm;
-
-		Cursor requests = db.getAllRows(DatabaseConnector.TABLE_NAME[2],
-				DatabaseConnector.REQUEST_FIELDS, "date", null);
-
-		while (requests.moveToNext()) {
-			hm = new HashMap<String, Object>();
-			Cursor provider = db.getRowById(DatabaseConnector.TABLE_NAME[1],
-					Long.parseLong(requests.getString(1)));
-
-			if (provider.moveToFirst()) {
-
-				hm.put(DatabaseConnector.REQUEST_FIELDS[1],
-						provider.getString(2));
-			}
-			hm.put(DatabaseConnector.REQUEST_FIELDS[2], requests.getString(2));
-			hm.put(DatabaseConnector.REQUEST_FIELDS[3], requests.getString(3));
-			hm.put(IMGKEY, R.drawable.ic_launcher);
-
-			myRequests.add(hm);
-		}
-
-		SimpleAdapter adapter = new SimpleAdapter(this, myRequests,
-				R.layout.row, new String[] {
-						DatabaseConnector.REQUEST_FIELDS[1],
-						DatabaseConnector.REQUEST_FIELDS[2],
-						DatabaseConnector.REQUEST_FIELDS[3], IMGKEY },
-				new int[] { R.id.textview_provider, R.id.textview_date,
-						R.id.textview_allcost, R.id.imageView_list });
-
+		adapter = new MyAdapterRequest(this, listRequests);
+		
 		listView.setAdapter(adapter);
-		// listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 		listView.setOnItemClickListener(viewRequestListener);
 		db.close();
@@ -74,12 +50,16 @@ public class ListRequestActivity extends Activity {
 
 	OnItemClickListener viewRequestListener = new OnItemClickListener() {
 		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
+		public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+				long idItem) {
 			Intent viewContact = new Intent(ListRequestActivity.this,
 					ViewRequestActivity.class);
 
-			viewContact.putExtra(ROW_ID, arg3);
+			Request request = listRequests.get(position);
+			viewContact.putExtra(ROW_ID, request.getId());
+			viewContact.putExtra(PROVIDER_NAME, request.getProviderName());
+			viewContact.putExtra(DATE, request.getDate());
+			viewContact.putExtra(ALL_COST, request.getAllCost());
 			startActivity(viewContact);
 		}
 	};
@@ -136,4 +116,23 @@ public class ListRequestActivity extends Activity {
 		startActivity(intent);
 	}
 
+	private void loadData(ArrayList<Request> list) {
+		db = new DatabaseConnector(this);
+		db.open();
+		Cursor requests = db.getAllRows(DatabaseConnector.TABLE_NAME[2],
+				DatabaseConnector.REQUEST_FIELDS, "date", null);
+
+		while (requests.moveToNext()) {
+			Cursor provider = db.getRowById(DatabaseConnector.TABLE_NAME[1],
+					Long.parseLong(requests.getString(1)));
+			if (provider.moveToFirst()) {
+				Request request = new Request(requests.getString(2),
+						requests.getString(3), provider.getString(2),
+						requests.getLong(0), R.drawable.ic_launcher);
+				list.add(request);
+			}
+		}
+
+		db.close();
+	}
 }
