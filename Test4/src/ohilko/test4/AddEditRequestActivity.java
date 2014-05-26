@@ -123,7 +123,7 @@ public class AddEditRequestActivity extends Activity {
 							DatabaseConnector.REQUEST_PRODUCT_FIELDS,
 							new String[] { "request_id" },
 							new String[] { Long.toString(rowID) });
-					while (products_request.moveToFirst()) {
+					while (products_request.moveToNext()) {
 						db.deleteRow(DatabaseConnector.TABLE_NAME[4],
 								products_request.getLong(0));
 					}

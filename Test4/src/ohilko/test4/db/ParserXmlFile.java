@@ -6,6 +6,7 @@ import org.xmlpull.v1.*;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Environment;
 
 public class ParserXmlFile {
 	private File file;
@@ -16,6 +17,88 @@ public class ParserXmlFile {
 		file = f;
 		context = c;
 		db = db1;
+	}
+
+	public void fillXmlFile() {
+		if (!Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
+			return;
+		}
+		String request = "request";
+		String product = "product";
+		String amount = "amount";
+
+		try {
+			db.open();
+			Cursor requests = db.getRow(DatabaseConnector.TABLE_NAME[2],
+					DatabaseConnector.REQUEST_FIELDS,
+					new String[] { "isUnloaded" }, new String[] { "false" });
+
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+			bw.write("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
+			bw.write("<requests>");
+			while (requests.moveToNext()) {
+				Cursor provider = db.getRowById(
+						DatabaseConnector.TABLE_NAME[1],
+						Long.parseLong(requests.getString(1)));
+
+				Cursor products = db.getRow(DatabaseConnector.TABLE_NAME[4],
+						DatabaseConnector.REQUEST_PRODUCT_FIELDS,
+						new String[] { "requset_id" },
+						new String[] { Long.toString(requests.getLong(0)) });
+				bw.write("<" + request + ">");
+				if (provider.moveToFirst()) {
+					for (int i = 1; i < 3; i++) {
+						bw.write("<" + DatabaseConnector.PROVIDER_FIELDS[1]
+								+ ">");
+						bw.write(provider.getString(1));
+						bw.write("</" + DatabaseConnector.PROVIDER_FIELDS[1]
+								+ ">");
+					}
+				}
+				for (int i = 2; i < DatabaseConnector.REQUEST_FIELDS.length - 1; i++) {
+					bw.write("<" + DatabaseConnector.REQUEST_FIELDS[i] + ">");
+					bw.write(requests.getString(i));
+					bw.write("</" + DatabaseConnector.REQUEST_FIELDS[i] + ">");
+				}
+				bw.write("<products>");
+				while (products.moveToNext()) {
+					Cursor one_product = db.getRowById(
+							DatabaseConnector.TABLE_NAME[0],
+							Long.parseLong(products.getString(2)));
+
+					bw.write("<" + product + ">");
+					for (int i = 3; i < DatabaseConnector.PRODUCT_FIELDS.length - 1; i++) {
+						bw.write("<" + DatabaseConnector.PRODUCT_FIELDS[i]
+								+ ">");
+						bw.write(one_product.getString(i));
+						bw.write("</" + DatabaseConnector.PRODUCT_FIELDS[i]
+								+ ">");
+					}
+					bw.write("<" + amount + ">");
+					bw.write(products.getString(3));
+					bw.write("</" + amount + ">");
+
+					bw.write("</" + product + ">");
+				}
+				bw.write("</products>");
+				bw.write("</" + request + ">");
+
+				/** Update request */
+				String[] data = new String[4];
+				for (int i = 1; i < 4; i++) {
+					data[i - 1] = requests.getString(i);
+				}
+				data[3] = "true";
+				db.updateRow(requests.getLong(0),
+						DatabaseConnector.TABLE_NAME[2],
+						DatabaseConnector.REQUEST_FIELDS, data);
+			}
+			bw.write("</requests>");
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void parser() {
@@ -69,7 +152,6 @@ public class ParserXmlFile {
 				DatabaseConnector.PRODUCT_FIELDS,
 				new String[] { "isDirectory" }, new String[] { "true" });
 
-
 		while (directories.moveToNext()) {
 			db.open();
 			Cursor products_child = db.getRow(DatabaseConnector.TABLE_NAME[0],
@@ -82,7 +164,8 @@ public class ParserXmlFile {
 						DatabaseConnector.TABLE_NAME[3],
 						DatabaseConnector.PRODUCT_CHILD_FIELDS,
 						new String[] { directories.getString(0),
-								products_child.getString(0), products_child.getString(6) });
+								products_child.getString(0),
+								products_child.getString(6) });
 			}
 		}
 	}

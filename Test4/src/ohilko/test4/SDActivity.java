@@ -82,7 +82,7 @@ public class SDActivity extends Activity {
 	};
 
 	private void openDialog() {
-		String[] fileFor = { ".xml" };
+		String[] fileFor = { };
 		OnFileSelectedListener listener = new OnFileSelectedListener() {
 			@Override
 			public void onFileSelected(File f) throws IOException {

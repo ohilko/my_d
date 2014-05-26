@@ -5,6 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="download_SD">Download from SD</string>
+    <string name="download_mail">Download from mail</string>
     <string name="download_cloud">Download from Cloud</string>
     <string name="load_previous_data">Load previous data</string>
     <string name="browse">Browse</string>
@@ -40,7 +41,7 @@
     <string name="errorButtonNo">Нет</string>
     <string name="errorTitleDelete">Удаление заявки</string>
     <string name="errorMessageDeleteRequest">Вы уверены, что хотите удалить заявку?</string>
-    
+
     <string-array name="cloud_array">
         <item>Dropbox</item>
         <item>Google Drive</item>
@@ -51,5 +52,6 @@
     <string name="title_activity_view_request">ViewRequestActivity</string>
     <string name="title_activity_choose_provider">ChooseProviderActivity</string>
     <string name="title_activity_choose_product">ChooseProductActivity</string>
+    <string name="title_activity_mail">MailActivity</string>
 
 </resources>

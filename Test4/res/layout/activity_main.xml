@@ -9,12 +9,20 @@
     android:paddingTop="@dimen/activity_vertical_margin" >
 
     <Button
+        android1:id="@+id/mail"
+        android1:layout_width="match_parent"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_alignParentTop="true"
+        android1:text="@string/download_mail" />
+
+    <Button
         android1:id="@+id/download_SD"
         android1:layout_width="match_parent"
         android1:layout_height="wrap_content"
-        android1:layout_alignParentTop="true"
-        android1:layout_centerHorizontal="true"
-        android1:layout_marginTop="15dp"
+        android1:layout_alignLeft="@+id/mail"
+        android1:layout_below="@+id/mail"
+        android1:layout_marginTop="16dp"
         android1:text="@string/download_SD" />
 
     <Button

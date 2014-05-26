@@ -31,9 +31,10 @@
             </intent-filter>
         </activity>
 
-        <meta-data android:name="com.google.android.gms.version"
-           android:value="@integer/google_play_services_version" />
-        
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <service
             android:name="com.dropbox.sync.android.DbxSyncService"
             android:enabled="true"
@@ -88,6 +89,10 @@
         <activity
             android:name="ohilko.test4.ChooseProductActivity"
             android:label="@string/title_activity_choose_product" >
+        </activity>
+        <activity
+            android:name="ohilko.test4.MailActivity"
+            android:label="@string/title_activity_mail" >
         </activity>
     </application>
 
