@@ -18,7 +18,10 @@ public class DatabaseConnector {
 	public static final String[] PRODUCT_CHILD_FIELDS = { "_id", "product_id",
 			"product_child_id", "isChildDirectory" };
 	public static final String[] TABLE_NAME = { "Product", "Provider",
-			"Request", "Product_child", "Request_product" };
+			"Request", "Product_child", "Request_product", "Mail_Data", "SD_Data"};
+	public static final String[] MAIL_DATA_FIELDS = {"_id", "login" , "password", "smtp", "pop3", "subject"};
+	
+	public static final String[] SD_DATA_FIELDS = {"_id", "path"};
 
 	private SQLiteDatabase database;
 	private DatabaseOpenHelper databaseOpenHelper;
@@ -136,6 +139,8 @@ public class DatabaseConnector {
 			db.execSQL(createTable(REQUEST_FIELDS, TABLE_NAME[2]));
 			db.execSQL(createTable(PRODUCT_CHILD_FIELDS, TABLE_NAME[3]));
 			db.execSQL(createTable(REQUEST_PRODUCT_FIELDS, TABLE_NAME[4]));
+			db.execSQL(createTable(MAIL_DATA_FIELDS, TABLE_NAME[5]));
+			db.execSQL(createTable(SD_DATA_FIELDS, TABLE_NAME[6]));
 		}
 
 		private String createTable(String[] table, String table_name) {

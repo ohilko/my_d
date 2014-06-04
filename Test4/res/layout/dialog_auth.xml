@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/editText_dialog_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText_dialog_login"
+        android:layout_below="@+id/editText_dialog_login"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:hint="password..."
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/editText_pop3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText_dialog_password"
+        android:layout_below="@+id/editText_dialog_password"
+        android:layout_marginTop="25dp"
+        android:hint="pop3 host..."
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/editText_smtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText_pop3"
+        android:layout_below="@+id/editText_pop3"
+        android:layout_marginTop="25dp"
+        android:hint="smtp host..."
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/editText_subject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText_smtp"
+        android:layout_below="@+id/editText_smtp"
+        android:layout_marginTop="25dp"
+        android:hint="subject..."
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/editText_dialog_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="37dp"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:hint="email..."
+        android:inputType="textEmailAddress" />
+
+</RelativeLayout>

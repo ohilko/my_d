@@ -15,6 +15,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -25,6 +26,7 @@ public class SDActivity extends Activity {
 	private EditText path;
 	private Button browse;
 	private Button open;
+	private DatabaseConnector db;
 
 	OnClickListener browseClicked = new OnClickListener() {
 
@@ -38,8 +40,7 @@ public class SDActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			final DatabaseConnector db = new DatabaseConnector(SDActivity.this);
-			
+
 			if (path.getText().toString().equals("")) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						SDActivity.this);
@@ -53,12 +54,13 @@ public class SDActivity extends Activity {
 				if (splitPath[1].equals("xml")) {
 					File f = new File(path.getText().toString());
 					if (f.exists()) {
-						ParserXmlFile parser = new ParserXmlFile(f, SDActivity.this, db );
+						ParserXmlFile parser = new ParserXmlFile(f,
+								SDActivity.this, db);
 						parser.parser();
 						parser.addInTableProductChild();
-						
+
 						startNewActivity(ListRequestActivity.class);
-						
+
 					} else {
 						AlertDialog.Builder builder = new AlertDialog.Builder(
 								SDActivity.this);
@@ -82,24 +84,10 @@ public class SDActivity extends Activity {
 	};
 
 	private void openDialog() {
-		String[] fileFor = { };
+		String[] fileFor = {};
 		OnFileSelectedListener listener = new OnFileSelectedListener() {
 			@Override
 			public void onFileSelected(File f) throws IOException {
-				/*
-				 * File dest = new
-				 * File(Environment.getExternalStorageDirectory().toString() +
-				 * nameFile); path.setText(f.getPath()); if(!dest.exists()) {
-				 * try { dest.createNewFile(); } catch (IOException e) {
-				 * e.printStackTrace(); } }
-				 * 
-				 * FileChannel sourceChannel = new
-				 * FileInputStream(f).getChannel(); try { FileChannel
-				 * destChannel = new FileOutputStream(dest).getChannel(); try {
-				 * destChannel.transferFrom(sourceChannel, 0,
-				 * sourceChannel.size()); } finally { destChannel.close(); } }
-				 * finally { sourceChannel.close(); }
-				 */
 				path.setText(f.getPath());
 			}
 		};
@@ -119,6 +107,15 @@ public class SDActivity extends Activity {
 		path = (EditText) findViewById(R.id.editText_path);
 		browse = (Button) findViewById(R.id.button_browse);
 		open = (Button) findViewById(R.id.button_open_sd_file);
+
+		db = new DatabaseConnector(SDActivity.this);
+		db.open();
+		Cursor sd_path = db.getAllRows(DatabaseConnector.TABLE_NAME[6],
+				DatabaseConnector.SD_DATA_FIELDS, null, null);
+		if (sd_path.moveToFirst()) {
+			path.setText(sd_path.getString(1));
+		}
+		db.close();
 
 		browse.setOnClickListener(browseClicked);
 		open.setOnClickListener(openClicked);
@@ -158,7 +155,7 @@ public class SDActivity extends Activity {
 
 		return true;
 	}
-	
+
 	private void startNewActivity(Class l) {
 		Intent intent = new Intent(this, l);
 		startActivity(intent);

@@ -22,7 +22,7 @@ public class ListRequestActivity extends Activity {
 	public static final String PROVIDER_NAME = "provider_name";
 	public static final String DATE = "date";
 	public static final String ALL_COST = "allCost";
-	private DatabaseConnector db;
+	private DatabaseConnector db = new DatabaseConnector(this);
 	private MyAdapterRequest adapter;
 	private ArrayList<Request> listRequests;
 	private ListView listView;
@@ -32,20 +32,23 @@ public class ListRequestActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_request);
 
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-
 		listView = (ListView) findViewById(R.id.listView_see);
 
 		listRequests = new ArrayList<Request>();
 		loadData(listRequests);
 
+		TextView list_empty = (TextView) findViewById(R.id.textView_list_empty);
+		if (listRequests.size() == 0) {
+			list_empty.setText("Список пустой. Еще нет заявок");
+		} else {
+			list_empty.setText("");
+		}
+
 		adapter = new MyAdapterRequest(this, listRequests);
-		
+
 		listView.setAdapter(adapter);
 
 		listView.setOnItemClickListener(viewRequestListener);
-		db.close();
 	}
 
 	OnItemClickListener viewRequestListener = new OnItemClickListener() {
@@ -72,11 +75,12 @@ public class ListRequestActivity extends Activity {
 				android.R.drawable.ic_dialog_dialer);
 		menu.findItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-		sm.add(Menu.FIRST, 300, 300, "Add").setIcon(
+		sm.add(Menu.FIRST, 200, 200, "Добавление заявки").setIcon(
 				android.R.drawable.ic_menu_add);
-		sm.add(Menu.FIRST, 400, 400, "Unload requests");
-		sm.add(Menu.FIRST, 100, 100, "About...");
-		sm.add(Menu.FIRST, 200, 200, "Settings...");
+
+		sm.add(Menu.FIRST, 100, 100, "О программе");
+		sm.add(Menu.FIRST, 300, 300, "Получение данных");
+		sm.add(Menu.FIRST, 400, 400, "Выгрузка заявок");
 
 		return true;
 	}
@@ -84,20 +88,28 @@ public class ListRequestActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case android.R.id.home: {
-			finish();
-			break;
-		}
 		case 100: {
 			startNewActivity(AboutActivity.class);
 			break;
 		}
 		case 200: {
-			startNewActivity(SettingsActivity.class);
+			db.open();
+			if (db.getAllRows(DatabaseConnector.TABLE_NAME[0],
+					DatabaseConnector.PRODUCT_FIELDS, null, null).moveToFirst()) {
+				startNewActivity(AddEditRequestActivity.class);
+			} else {
+				Toast error = Toast
+						.makeText(
+								ListRequestActivity.this,
+								"Нет данных в базе. Выполните сначала пункт 'Получение данных'",
+								Toast.LENGTH_LONG);
+				error.show();
+			}
+			db.close();
 			break;
 		}
 		case 300: {
-			startNewActivity(AddEditRequestActivity.class);
+			startNewActivity(MainActivity.class);
 			break;
 		}
 		case 400: {
@@ -117,7 +129,6 @@ public class ListRequestActivity extends Activity {
 	}
 
 	private void loadData(ArrayList<Request> list) {
-		db = new DatabaseConnector(this);
 		db.open();
 		Cursor requests = db.getAllRows(DatabaseConnector.TABLE_NAME[2],
 				DatabaseConnector.REQUEST_FIELDS, "date", null);

@@ -17,26 +17,11 @@ public class MyAdapterRequest extends BaseAdapter {
 	private Context context;
 	private ArrayList<Request> listRequest;
 
-//	public MyAdapterRequest(Context context,
-//			ArrayList<HashMap<String, Object>> data, int resource, String[] from,
-//			int[] to) {
-//		super(context, data, resource, from, to);
-//		this.context = context;
-//		this.resource = resource;
-//		this.from = new String[from.length];
-//		this.from = from.clone();
-//		this.to = new int[to.length];
-//		this.to = to.clone();
-//		this.myRequests = new ArrayList<HashMap<String,Object>>();
-//		this.myRequests.addAll(data);
-//		
-//	}
-
-	 public MyAdapterRequest(Context context, ArrayList<Request> list) {
-	 this.context = context;
-	 this.listRequest = new ArrayList<Request>();
-	 this.listRequest.addAll(list);
-	 }
+	public MyAdapterRequest(Context context, ArrayList<Request> list) {
+		this.context = context;
+		this.listRequest = new ArrayList<Request>();
+		this.listRequest.addAll(list);
+	}
 
 	public void remove(int position) {
 		listRequest.remove(position);
@@ -67,8 +52,7 @@ public class MyAdapterRequest extends BaseAdapter {
 		if (convertView == null) {
 			LayoutInflater layoutInflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = layoutInflater
-					.inflate(R.layout.row, null);
+			convertView = layoutInflater.inflate(R.layout.row, null);
 		}
 
 		TextView providerName = (TextView) convertView
@@ -76,8 +60,8 @@ public class MyAdapterRequest extends BaseAdapter {
 		TextView date = (TextView) convertView.findViewById(R.id.textview_date);
 		TextView allCost = (TextView) convertView
 				.findViewById(R.id.textview_allcost);
-		ImageView image = (ImageView) convertView.findViewById(R.id.imageView_list);
-		
+		ImageView image = (ImageView) convertView
+				.findViewById(R.id.imageView_list);
 
 		providerName.setText(request.getProviderName());
 		date.setText(request.getDate());

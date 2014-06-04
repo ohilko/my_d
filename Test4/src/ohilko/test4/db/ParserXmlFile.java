@@ -19,24 +19,20 @@ public class ParserXmlFile {
 		db = db1;
 	}
 
-	public void fillXmlFile() {
-		if (!Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED)) {
-			return;
-		}
+	public int fillXmlFile() {
 		String request = "request";
 		String product = "product";
 		String amount = "amount";
 
 		try {
 			db.open();
-			Cursor requests = db.getRow(DatabaseConnector.TABLE_NAME[2],
-					DatabaseConnector.REQUEST_FIELDS,
-					new String[] { "isUnloaded" }, new String[] { "false" });
-
+			Cursor requests = db.getAllRows(DatabaseConnector.TABLE_NAME[2],
+					DatabaseConnector.REQUEST_FIELDS, "date", null);
+			
 			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 			bw.write("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
 			bw.write("<requests>");
+
 			while (requests.moveToNext()) {
 				Cursor provider = db.getRowById(
 						DatabaseConnector.TABLE_NAME[1],
@@ -44,15 +40,15 @@ public class ParserXmlFile {
 
 				Cursor products = db.getRow(DatabaseConnector.TABLE_NAME[4],
 						DatabaseConnector.REQUEST_PRODUCT_FIELDS,
-						new String[] { "requset_id" },
+						new String[] { "request_id" },
 						new String[] { Long.toString(requests.getLong(0)) });
 				bw.write("<" + request + ">");
 				if (provider.moveToFirst()) {
 					for (int i = 1; i < 3; i++) {
-						bw.write("<" + DatabaseConnector.PROVIDER_FIELDS[1]
+						bw.write("<" + DatabaseConnector.PROVIDER_FIELDS[i]
 								+ ">");
-						bw.write(provider.getString(1));
-						bw.write("</" + DatabaseConnector.PROVIDER_FIELDS[1]
+						bw.write(provider.getString(i));
+						bw.write("</" + DatabaseConnector.PROVIDER_FIELDS[i]
 								+ ">");
 					}
 				}
@@ -67,19 +63,22 @@ public class ParserXmlFile {
 							DatabaseConnector.TABLE_NAME[0],
 							Long.parseLong(products.getString(2)));
 
-					bw.write("<" + product + ">");
-					for (int i = 3; i < DatabaseConnector.PRODUCT_FIELDS.length - 1; i++) {
-						bw.write("<" + DatabaseConnector.PRODUCT_FIELDS[i]
-								+ ">");
-						bw.write(one_product.getString(i));
-						bw.write("</" + DatabaseConnector.PRODUCT_FIELDS[i]
-								+ ">");
-					}
-					bw.write("<" + amount + ">");
-					bw.write(products.getString(3));
-					bw.write("</" + amount + ">");
+					if (one_product.moveToFirst()) {
+						bw.write("<" + product + ">");
+						for (int i = 1; i < DatabaseConnector.PRODUCT_FIELDS.length - 1; i++) {
+							bw.write("<" + DatabaseConnector.PRODUCT_FIELDS[i]
+									+ ">");
+							bw.write(one_product.getString(i));
+							bw.write("</" + DatabaseConnector.PRODUCT_FIELDS[i]
+									+ ">");
+						}
 
-					bw.write("</" + product + ">");
+						bw.write("<" + amount + ">");
+						bw.write(products.getString(3));
+						bw.write("</" + amount + ">");
+
+						bw.write("</" + product + ">");
+					}
 				}
 				bw.write("</products>");
 				bw.write("</" + request + ">");
@@ -96,8 +95,9 @@ public class ParserXmlFile {
 			}
 			bw.write("</requests>");
 			bw.close();
+			return 1;
 		} catch (IOException e) {
-			e.printStackTrace();
+			return 3;
 		}
 	}
 
