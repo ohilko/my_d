@@ -15,7 +15,7 @@
             android:id="@+id/ofd_current_path"
             android:layout_width="1dip"
             android:layout_height="wrap_content"
-            android:layout_weight="0.78"
+            android:layout_weight="0.5"
             android:paddingLeft="2dip"
             android:text="Hello"
             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -26,9 +26,16 @@
             android:id="@+id/ofd_go_up"
             android:layout_width="1dip"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.22"
+            android:layout_weight="0.25"
             android:text="@string/ofd_go_up_text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <Button
+            android:id="@+id/of_choose"
+            android:layout_width="1dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:text="Выбрать"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 

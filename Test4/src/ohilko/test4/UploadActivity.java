@@ -88,11 +88,15 @@ public class UploadActivity extends Activity {
 			}
 				break;
 			case 1: {
-
+				Intent intent = new Intent(UploadActivity.this, SDActivity.class);
+				intent.putExtra(MainActivity.ISDOWNLOAD, false);
+				startActivity(intent);
 			}
 				break;
 			case 2: {
-
+				Intent intent = new Intent(UploadActivity.this, CloudActivity.class);
+				intent.putExtra(MainActivity.ISDOWNLOAD, false);
+				startActivity(intent);
 			}
 				break;
 			default:

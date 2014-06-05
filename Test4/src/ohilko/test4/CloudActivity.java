@@ -1,10 +1,15 @@
 package ohilko.test4;
 
 import ohilko.test4.dropbox.OpenDropboxFileTask;
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -28,16 +33,30 @@ public class CloudActivity extends Activity implements OnClickListener {
 	private boolean isLoggedIn;
 	private Button logIn;
 	private Button listFiles;
+	private boolean isDownload;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cloud);
+		
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 
+		Bundle extras = getIntent().getExtras();
+		isDownload = true;
+		if (extras != null) {
+			isDownload = extras.getBoolean(MainActivity.ISDOWNLOAD);
+		}
 		logIn = (Button) findViewById(R.id.dropbox_login);
 		logIn.setOnClickListener(this);
 		listFiles = (Button) findViewById(R.id.list_files);
 		listFiles.setOnClickListener(this);
+		if (isDownload) {
+			listFiles.setText("Выберите файл для загрузки");
+		} else {
+			listFiles.setText("Выберите папку для выгрузки");
+		}
 
 		loggedIn(false);
 
@@ -82,6 +101,40 @@ public class CloudActivity extends Activity implements OnClickListener {
 		}
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.sd, menu);
+
+		SubMenu sm = menu.addSubMenu(Menu.FIRST, 1, 1, "SubMenu").setIcon(
+				android.R.drawable.ic_dialog_dialer);
+		menu.findItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		sm.add(Menu.FIRST, 100, 100, "О программе");
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home: {
+			finish();
+			break;
+		}
+		case 100: {
+			startNewActivity(AboutActivity.class);
+			break;
+		}
+		default:
+			return false;
+		}
+
+		return true;
+	}
+
+	private void startNewActivity(Class l) {
+		Intent intent = new Intent(this, l);
+		startActivity(intent);
+	}
+	
 	public void loggedIn(boolean isLogged) {
 		isLoggedIn = isLogged;
 		listFiles.setEnabled(isLogged);
@@ -101,7 +154,7 @@ public class CloudActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.list_files: {
 			OpenDropboxFileTask ofd = new OpenDropboxFileTask(this, FILE_DIR,
-					dropbox);
+					dropbox, isDownload);
 			ofd.show();
 		}
 			break;

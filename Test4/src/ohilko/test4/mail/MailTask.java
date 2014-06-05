@@ -171,7 +171,7 @@ public class MailTask extends AsyncTask<String, Integer, Integer> {
 
 		File file = new File("/sdcard/tmp/requests.xml");
 		ParserXmlFile parser = new ParserXmlFile(file, context, db);
-		int result = parser.fillXmlFile();
+		parser.fillXmlFile();
 
 		MimeBodyPart attachment = new MimeBodyPart();
 		FileDataSource fds = new FileDataSource("/sdcard/tmp/requests.xml");

@@ -227,7 +227,7 @@ containing a value of this type.
         public static final int list=0x7f02001f;
     }
     public static final class id {
-        public static final int action_settings=0x7f050055;
+        public static final int action_settings=0x7f050056;
         public static final int button_SD=0x7f050031;
         public static final int button_add_product=0x7f050010;
         public static final int button_add_products=0x7f05001b;
@@ -254,21 +254,22 @@ containing a value of this type.
         public static final int editText_smtp=0x7f05003b;
         public static final int editText_subject=0x7f05003c;
         public static final int hybrid=0x7f050004;
-        public static final int imageView_list=0x7f05004b;
+        public static final int imageView_list=0x7f05004c;
         public static final int listView_choose_provider=0x7f05001e;
         public static final int listView_products=0x7f05001a;
         public static final int listView_see=0x7f050023;
         public static final int listView_settings=0x7f050028;
         public static final int list_files=0x7f050020;
         public static final int list_request_products=0x7f050018;
-        public static final int menu_item_search=0x7f050056;
+        public static final int menu_item_search=0x7f050057;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
+        public static final int of_choose=0x7f050046;
         public static final int ofd_current_path=0x7f050043;
         public static final int ofd_go_up=0x7f050044;
-        public static final int ofd_item_bar=0x7f050046;
-        public static final int ofd_item_image=0x7f050047;
-        public static final int ofd_item_text=0x7f050048;
+        public static final int ofd_item_bar=0x7f050047;
+        public static final int ofd_item_image=0x7f050048;
+        public static final int ofd_item_text=0x7f050049;
         public static final int ofd_list=0x7f050045;
         public static final int ofd_top_bar=0x7f050042;
         public static final int radioGroup_cloud=0x7f05003d;
@@ -283,18 +284,18 @@ containing a value of this type.
         public static final int table_add_edit_request=0x7f050005;
         public static final int table_request_products_label=0x7f05000f;
         public static final int terrain=0x7f050003;
-        public static final int text1=0x7f050049;
-        public static final int text2=0x7f05004a;
-        public static final int textView_address=0x7f050051;
+        public static final int text1=0x7f05004a;
+        public static final int text2=0x7f05004b;
+        public static final int textView_address=0x7f050052;
         public static final int textView_allCost=0x7f05000e;
         public static final int textView_amount=0x7f050034;
         public static final int textView_label_allCost=0x7f05000d;
         public static final int textView_label_date=0x7f05000a;
         public static final int textView_label_provider=0x7f050007;
         public static final int textView_list_empty=0x7f050022;
-        public static final int textView_name=0x7f05004e;
-        public static final int textView_name_directory=0x7f050050;
-        public static final int textView_phone=0x7f050052;
+        public static final int textView_name=0x7f05004f;
+        public static final int textView_name_directory=0x7f050051;
+        public static final int textView_phone=0x7f050053;
         public static final int textView_price=0x7f050035;
         public static final int textView_price_text=0x7f050036;
         public static final int textView_product_amount=0x7f050017;
@@ -306,14 +307,14 @@ containing a value of this type.
         public static final int textView_sum=0x7f05001d;
         public static final int textView_sum_label=0x7f05001c;
         public static final int textView_sum_text=0x7f050037;
-        public static final int textView_um=0x7f05004f;
-        public static final int textview_allcost=0x7f05004d;
+        public static final int textView_um=0x7f050050;
+        public static final int textview_allcost=0x7f05004e;
         public static final int textview_cost=0x7f050041;
         public static final int textview_data_create=0x7f050040;
-        public static final int textview_date=0x7f05004c;
-        public static final int textview_main_info=0x7f050053;
+        public static final int textview_date=0x7f05004d;
+        public static final int textview_main_info=0x7f050054;
         public static final int textview_provider=0x7f05003f;
-        public static final int textview_secondary_info=0x7f050054;
+        public static final int textview_secondary_info=0x7f050055;
     }
     public static final class integer {
         public static final int google_play_services_version=0x7f070000;
@@ -337,13 +338,14 @@ containing a value of this type.
         public static final int dialog_cloud=0x7f03000f;
         public static final int item_list_request=0x7f030010;
         public static final int ofd_layout=0x7f030011;
-        public static final int ofd_list_item=0x7f030012;
-        public static final int request_list_item=0x7f030013;
-        public static final int row=0x7f030014;
-        public static final int row_add_product=0x7f030015;
-        public static final int row_add_product_header=0x7f030016;
-        public static final int row_add_provider=0x7f030017;
-        public static final int row_settings=0x7f030018;
+        public static final int ofd_layout_unload=0x7f030012;
+        public static final int ofd_list_item=0x7f030013;
+        public static final int request_list_item=0x7f030014;
+        public static final int row=0x7f030015;
+        public static final int row_add_product=0x7f030016;
+        public static final int row_add_product_header=0x7f030017;
+        public static final int row_add_provider=0x7f030018;
+        public static final int row_settings=0x7f030019;
     }
     public static final class menu {
         public static final int about=0x7f0b0000;
