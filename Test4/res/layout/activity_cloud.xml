@@ -96,20 +96,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Login to Dropbox"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
         android:textStyle="bold" />
- 
-    <!-- <Button
-        android:id="@+id/upload_file"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="#176CEC"
-        android:text="Upload File to Dropbox"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#fff"
-        android:textStyle="bold" /> -->
  
     <Button
         android:id="@+id/list_files"
@@ -117,7 +105,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="Выбор файла"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
  
     <ScrollView

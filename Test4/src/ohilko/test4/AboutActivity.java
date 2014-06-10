@@ -22,13 +22,7 @@ public class AboutActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.about, menu);
-		
-//		SubMenu sm = menu.addSubMenu (Menu.FIRST, 1, 1, "SubMenu").setIcon(android.R.drawable.ic_dialog_dialer);
-//		menu.findItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-//		sm.add(Menu.FIRST, 200, 200, "Settings...");
-		
 		return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -40,12 +34,6 @@ public class AboutActivity extends Activity {
 			finish();
 			break;
 		}
-//		case 200: {
-//			Intent intent = new Intent(AboutActivity.this,
-//					SettingsActivity.class);
-//			startActivity(intent);
-//			break;
-//		}
 		default:
 			return false;
 		}

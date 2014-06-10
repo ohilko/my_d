@@ -52,19 +52,19 @@ public class UploadActivity extends Activity {
 		HashMap<String, Object> hm;
 
 		hm = new HashMap<String, Object>();
-		hm.put(MAIN_INFO, getResources().getString(R.string.download_mail));
-		hm.put(SECONDARY_INFO, getResources().getString(R.string.download_mail));
+		hm.put(MAIN_INFO, getResources().getString(R.string.unload_mail));
+		hm.put(SECONDARY_INFO, getResources().getString(R.string.unload_mail_secondary));
 		settings.add(hm);
 
 		hm = new HashMap<String, Object>();
-		hm.put(MAIN_INFO, getResources().getString(R.string.download_SD));
-		hm.put(SECONDARY_INFO, getResources().getString(R.string.download_SD));
+		hm.put(MAIN_INFO, getResources().getString(R.string.unload_SD));
+		hm.put(SECONDARY_INFO, getResources().getString(R.string.unload_SD_secondary));
 		settings.add(hm);
 
 		hm = new HashMap<String, Object>();
-		hm.put(MAIN_INFO, getResources().getString(R.string.download_cloud));
+		hm.put(MAIN_INFO, getResources().getString(R.string.unload_cloud));
 		hm.put(SECONDARY_INFO, getResources()
-				.getString(R.string.download_cloud));
+				.getString(R.string.unload_cloud_secondary));
 		settings.add(hm);
 
 		SimpleAdapter adapter = new SimpleAdapter(this, settings,

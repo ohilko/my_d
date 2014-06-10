@@ -10,14 +10,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="13dp"
-        android:text="Name" />
+        android:text="Имя" />
 
     <TextView
         android:id="@+id/textView_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Address" />
+        android:text="Адрес" />
 
     <TextView
         android:id="@+id/textView_phone"
@@ -26,6 +26,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="63dp"
         android:layout_toRightOf="@+id/textView_address"
-        android:text="Phone" />
+        android:text="Телефон" />
 
 </RelativeLayout>

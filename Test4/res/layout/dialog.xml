@@ -24,7 +24,7 @@
         android:layout_alignBaseline="@+id/editText_amount"
         android:layout_alignBottom="@+id/editText_amount"
         android:layout_alignParentLeft="true"
-        android:text="Count" />
+        android:text="Количество" />
 
     <TextView
         android:id="@+id/textView_price"
@@ -33,7 +33,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/editText_amount"
         android:layout_marginTop="14dp"
-        android:text="Price" />
+        android:text="Цена" />
 
     <TextView
         android:id="@+id/textView_sum"
@@ -42,7 +42,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView_price"
         android:layout_marginTop="20dp"
-        android:text="Sum" />
+        android:text="Сумма" />
 
     <TextView
         android:id="@+id/textView_price_text"

@@ -363,7 +363,7 @@ containing a value of this type.
     }
     public static final class string {
         public static final int action_settings=0x7f06001c;
-        public static final int activity_see_no_items=0x7f06002d;
+        public static final int activity_see_no_items=0x7f060036;
         public static final int app_name=0x7f06001b;
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
@@ -388,7 +388,7 @@ containing a value of this type.
         [CHAR LIMIT=70] 
          */
         public static final int auth_client_using_bad_version_title=0x7f060014;
-        public static final int browse=0x7f060022;
+        public static final int browse=0x7f06002b;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -460,51 +460,61 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f060013;
-        public static final int connect=0x7f060024;
+        public static final int connect=0x7f06002d;
         public static final int download_SD=0x7f06001e;
+        public static final int download_SD_secondary=0x7f060021;
         public static final int download_cloud=0x7f060020;
+        public static final int download_cloud_secondary=0x7f060023;
         public static final int download_mail=0x7f06001f;
-        public static final int errorButton=0x7f06003e;
-        public static final int errorButtonNo=0x7f060040;
-        public static final int errorButtonYes=0x7f06003f;
-        public static final int errorMessageDeleteRequest=0x7f060042;
-        public static final int errorMessageEmptyField=0x7f060038;
-        public static final int errorMessageEmptyFields=0x7f060039;
-        public static final int errorMessageFileNotExist=0x7f06003d;
-        public static final int errorMessageIsNotFile=0x7f06003b;
-        public static final int errorTitleDelete=0x7f060041;
-        public static final int errorTitleEmptyField=0x7f060037;
-        public static final int errorTitleFileNotExist=0x7f06003c;
-        public static final int errorTitleIsNotFile=0x7f06003a;
+        public static final int download_mail_secondary=0x7f060022;
+        public static final int download_name=0x7f06004c;
+        public static final int errorButton=0x7f060047;
+        public static final int errorButtonNo=0x7f060049;
+        public static final int errorButtonYes=0x7f060048;
+        public static final int errorMessageDeleteRequest=0x7f06004b;
+        public static final int errorMessageEmptyField=0x7f060041;
+        public static final int errorMessageEmptyFields=0x7f060042;
+        public static final int errorMessageFileNotExist=0x7f060046;
+        public static final int errorMessageIsNotFile=0x7f060044;
+        public static final int errorTitleDelete=0x7f06004a;
+        public static final int errorTitleEmptyField=0x7f060040;
+        public static final int errorTitleFileNotExist=0x7f060045;
+        public static final int errorTitleIsNotFile=0x7f060043;
         public static final int hello_world=0x7f06001d;
-        public static final int label_allCost=0x7f060030;
-        public static final int label_date=0x7f06002e;
-        public static final int label_products=0x7f060031;
-        public static final int label_products_amount=0x7f060034;
-        public static final int label_products_name=0x7f060032;
-        public static final int label_products_price=0x7f060033;
-        public static final int label_provider=0x7f06002f;
-        public static final int load_previous_data=0x7f060021;
+        public static final int label_allCost=0x7f060039;
+        public static final int label_date=0x7f060037;
+        public static final int label_products=0x7f06003a;
+        public static final int label_products_amount=0x7f06003d;
+        public static final int label_products_name=0x7f06003b;
+        public static final int label_products_price=0x7f06003c;
+        public static final int label_provider=0x7f060038;
+        public static final int load_previous_data=0x7f06002a;
         /**  Location client code resources (prefix with location_client) 
          */
         public static final int location_client_powered_by_google=0x7f06001a;
-        public static final int ofd_go_up_text=0x7f060036;
-        public static final int ofd_title=0x7f060035;
-        public static final int open=0x7f060023;
-        public static final int some_hint_login=0x7f060026;
-        public static final int some_hint_password=0x7f060027;
-        public static final int some_hint_path=0x7f060025;
-        public static final int title_activity_about=0x7f060028;
-        public static final int title_activity_add_edit_request=0x7f060043;
-        public static final int title_activity_choose_product=0x7f060047;
-        public static final int title_activity_choose_provider=0x7f060046;
-        public static final int title_activity_cloud=0x7f06002a;
-        public static final int title_activity_list_request=0x7f06002c;
-        public static final int title_activity_mail=0x7f060048;
-        public static final int title_activity_sd=0x7f060029;
-        public static final int title_activity_settings=0x7f06002b;
-        public static final int title_activity_upload=0x7f060044;
-        public static final int title_activity_view_request=0x7f060045;
+        public static final int ofd_go_up_text=0x7f06003f;
+        public static final int ofd_title=0x7f06003e;
+        public static final int open=0x7f06002c;
+        public static final int some_hint_login=0x7f06002f;
+        public static final int some_hint_password=0x7f060030;
+        public static final int some_hint_path=0x7f06002e;
+        public static final int title_activity_about=0x7f060031;
+        public static final int title_activity_add_edit_request=0x7f06004d;
+        public static final int title_activity_choose_product=0x7f060051;
+        public static final int title_activity_choose_provider=0x7f060050;
+        public static final int title_activity_cloud=0x7f060033;
+        public static final int title_activity_list_request=0x7f060035;
+        public static final int title_activity_mail=0x7f060052;
+        public static final int title_activity_sd=0x7f060032;
+        public static final int title_activity_settings=0x7f060034;
+        public static final int title_activity_upload=0x7f06004e;
+        public static final int title_activity_view_request=0x7f06004f;
+        public static final int unload_SD=0x7f060024;
+        public static final int unload_SD_secondary=0x7f060027;
+        public static final int unload_cloud=0x7f060026;
+        public static final int unload_cloud_secondary=0x7f060029;
+        public static final int unload_mail=0x7f060025;
+        public static final int unload_mail_secondary=0x7f060028;
     }
     public static final class style {
         /** 

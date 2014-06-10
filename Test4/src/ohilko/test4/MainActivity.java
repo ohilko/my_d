@@ -55,18 +55,18 @@ public class MainActivity extends Activity {
 
 		hm = new HashMap<String, Object>();
 		hm.put(MAIN_INFO, getResources().getString(R.string.download_mail));
-		hm.put(SECONDARY_INFO, getResources().getString(R.string.download_mail));
+		hm.put(SECONDARY_INFO, getResources().getString(R.string.download_mail_secondary));
 		settings.add(hm);
 
 		hm = new HashMap<String, Object>();
 		hm.put(MAIN_INFO, getResources().getString(R.string.download_SD));
-		hm.put(SECONDARY_INFO, getResources().getString(R.string.download_SD));
+		hm.put(SECONDARY_INFO, getResources().getString(R.string.download_SD_secondary));
 		settings.add(hm);
 
 		hm = new HashMap<String, Object>();
 		hm.put(MAIN_INFO, getResources().getString(R.string.download_cloud));
 		hm.put(SECONDARY_INFO, getResources()
-				.getString(R.string.download_cloud));
+				.getString(R.string.download_cloud_secondary));
 		settings.add(hm);
 
 		SimpleAdapter adapter = new SimpleAdapter(this, settings,
@@ -178,7 +178,7 @@ public class MainActivity extends Activity {
 		SubMenu sm = menu.addSubMenu(Menu.FIRST, 1, 1, "SubMenu").setIcon(
 				android.R.drawable.ic_dialog_dialer);
 		menu.findItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		sm.add(Menu.FIRST, 100, 100, "About...");
+		sm.add(Menu.FIRST, 100, 100, "О программе");
 
 		return super.onCreateOptionsMenu(menu);
 	}

@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/listView_products"
-        android:text="Add products" />
+        android:text="Добавить продукты" />
 
     <TextView
         android:id="@+id/textView_sum_label"
@@ -34,7 +34,7 @@
         android:layout_alignBaseline="@+id/button_add_products"
         android:layout_alignBottom="@+id/button_add_products"
         android:layout_alignLeft="@+id/listView_products"
-        android:text="Sum" />
+        android:text="Общая сумма" />
 
     <TextView
         android:id="@+id/textView_sum"

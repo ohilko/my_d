@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="13dp"
         android:gravity="left"
-        android:text="Name" />
+        android:text="Название" />
 
     <TextView
         android:id="@+id/textView_um"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:gravity="left"
-        android:text="UM" />
+        android:text="Един. измерения" />
 
     <TextView
         android:id="@+id/textView_price"
@@ -29,7 +29,7 @@
         android:layout_marginLeft="63dp"
         android:layout_toRightOf="@+id/textView_um"
         android:gravity="left"
-        android:text="Price" />
+        android:text="Цена" />
 
     <TextView
         android:id="@+id/textView_amount"
@@ -38,6 +38,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:gravity="left"
-        android:text="Amount" />
+        android:text="Количество" />
 
 </RelativeLayout>

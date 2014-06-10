@@ -75,8 +75,7 @@ public class ListRequestActivity extends Activity {
 				android.R.drawable.ic_dialog_dialer);
 		menu.findItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-		sm.add(Menu.FIRST, 200, 200, "Добавление заявки").setIcon(
-				android.R.drawable.ic_menu_add);
+		sm.add(Menu.FIRST, 200, 200, "Добавление заявки");
 
 		sm.add(Menu.FIRST, 100, 100, "О программе");
 		sm.add(Menu.FIRST, 300, 300, "Получение данных");
@@ -102,7 +101,7 @@ public class ListRequestActivity extends Activity {
 						.makeText(
 								ListRequestActivity.this,
 								"Нет данных в базе. Выполните сначала пункт 'Получение данных'",
-								Toast.LENGTH_LONG);
+								Toast.LENGTH_SHORT);
 				error.show();
 			}
 			db.close();
@@ -139,7 +138,7 @@ public class ListRequestActivity extends Activity {
 			if (provider.moveToFirst()) {
 				Request request = new Request(requests.getString(2),
 						requests.getString(3), provider.getString(2),
-						requests.getLong(0), R.drawable.ic_launcher);
+						requests.getLong(0), android.R.drawable.ic_menu_agenda);
 				list.add(request);
 			}
 		}

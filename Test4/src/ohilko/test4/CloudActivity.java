@@ -95,7 +95,7 @@ public class CloudActivity extends Activity implements OnClickListener {
 
 				loggedIn(true);
 			} catch (IllegalStateException e) {
-				Toast.makeText(this, "Error during Dropbox authentication",
+				Toast.makeText(this, "Ошибка при авторизации",
 						Toast.LENGTH_SHORT).show();
 			}
 		}
@@ -138,7 +138,7 @@ public class CloudActivity extends Activity implements OnClickListener {
 	public void loggedIn(boolean isLogged) {
 		isLoggedIn = isLogged;
 		listFiles.setEnabled(isLogged);
-		logIn.setText(isLogged ? "Log out" : "Log in");
+		logIn.setText(isLogged ? "Выйти" : "Войти");
 	}
 
 	@Override

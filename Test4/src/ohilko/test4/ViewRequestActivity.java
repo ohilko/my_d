@@ -68,11 +68,6 @@ public class ViewRequestActivity extends Activity {
 		list_request_products = (ListView) findViewById(R.id.list_request_products);
 
 		getProductsForRequest();
-
-		// TableLayout[] tables = createTable();
-		//
-		// setContentView(tables[0]);
-		// setContentView(tables[1]);
 		db.close();
 	}
 
@@ -110,15 +105,12 @@ public class ViewRequestActivity extends Activity {
 				android.R.drawable.ic_dialog_dialer);
 		menu.findItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-		sm.add(Menu.FIRST, 300, 300, "Delete").setIcon(
-				android.R.drawable.ic_menu_delete);
+		sm.add(Menu.FIRST, 300, 300, "Удаление");
 		if (request.moveToFirst() && request.getString(4).equals("false")) {
-			sm.add(Menu.FIRST, 400, 400, "Edit requests").setIcon(
-					android.R.drawable.ic_menu_edit);
+			sm.add(Menu.FIRST, 400, 400, "Редактирование");
 		}
 
-		sm.add(Menu.FIRST, 100, 100, "About...");
-		sm.add(Menu.FIRST, 200, 200, "Settings...");
+		sm.add(Menu.FIRST, 100, 100, "О программе");
 
 		return true;
 	}
@@ -133,12 +125,6 @@ public class ViewRequestActivity extends Activity {
 		case 100: {
 			Intent intent = new Intent(ViewRequestActivity.this,
 					AboutActivity.class);
-			startActivity(intent);
-			break;
-		}
-		case 200: {
-			Intent intent = new Intent(ViewRequestActivity.this,
-					SettingsActivity.class);
 			startActivity(intent);
 			break;
 		}

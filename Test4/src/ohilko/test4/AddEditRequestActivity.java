@@ -254,7 +254,7 @@ public class AddEditRequestActivity extends Activity {
 			final View view) {
 		final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 
-		dialog.setTitle("Set amount");
+		dialog.setTitle("Установите количество товара");
 
 		View linearlayout = getLayoutInflater().inflate(R.layout.dialog, null);
 		dialog.setView(linearlayout);

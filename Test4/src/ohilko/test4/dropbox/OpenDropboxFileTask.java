@@ -13,9 +13,7 @@ import ohilko.test4.R;
 import ohilko.test4.db.DatabaseConnector;
 import ohilko.test4.db.ParserXmlFile;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,7 +42,6 @@ public class OpenDropboxFileTask extends Dialog implements OnClickListener {
 	private DropboxAPI<AndroidAuthSession> dropbox;
 	private String path;
 	private List<String> old_paths = new ArrayList<String>();
-	private boolean isDownload;
 
 	public OpenDropboxFileTask(final Context context, String dir,
 			DropboxAPI<AndroidAuthSession> dropbox, final boolean isDownload) {
@@ -52,7 +49,6 @@ public class OpenDropboxFileTask extends Dialog implements OnClickListener {
 		this.dropbox = dropbox;
 		this.path = dir;
 		this.context = context;
-		this.isDownload = isDownload;
 
 		if (!isDownload) {
 			setContentView(R.layout.ofd_layout_unload);
@@ -128,7 +124,6 @@ public class OpenDropboxFileTask extends Dialog implements OnClickListener {
 		private String path;
 		private Context context;
 		private boolean isFirst;
-		private ProgressDialog statusDialog;
 
 		public ListDropboxFiles(String path, Context context, boolean isFirst) {
 			this.path = path;
@@ -162,11 +157,6 @@ public class OpenDropboxFileTask extends Dialog implements OnClickListener {
 
 		protected void onPreExecute() {
 			if (isFirst) {
-				// statusDialog = new ProgressDialog(context);
-				// statusDialog.setMessage("Подождите...");
-				// statusDialog.setIndeterminate(false);
-				// statusDialog.setCancelable(false);
-				// statusDialog.show();
 				Toast error = Toast.makeText(context, "Подождите..",
 						Toast.LENGTH_SHORT);
 				error.show();
@@ -254,7 +244,8 @@ public class OpenDropboxFileTask extends Dialog implements OnClickListener {
 
 		@Override
 		protected File doInBackground(Void... params) {
-			File file = new File("/sdcard/tmp/requests.xml");
+			String file_name = "/sdcard/tmp/requests.xml";
+			File file = new File(file_name);
 			DatabaseConnector db = new DatabaseConnector(context);
 			try {
 				db.open();

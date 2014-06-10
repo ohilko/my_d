@@ -12,7 +12,7 @@
         android:layout_below="@+id/editText_dialog_login"
         android:layout_marginTop="25dp"
         android:ems="10"
-        android:hint="password..."
+        android:hint="пароль..."
         android:inputType="textPassword" />
 
     <EditText
@@ -22,7 +22,7 @@
         android:layout_alignLeft="@+id/editText_dialog_password"
         android:layout_below="@+id/editText_dialog_password"
         android:layout_marginTop="25dp"
-        android:hint="pop3 host..."
+        android:hint="pop3 хост..."
         android:ems="10" />
 
     <EditText
@@ -32,7 +32,7 @@
         android:layout_alignLeft="@+id/editText_pop3"
         android:layout_below="@+id/editText_pop3"
         android:layout_marginTop="25dp"
-        android:hint="smtp host..."
+        android:hint="smtp хост..."
         android:ems="10" >
 
         <requestFocus />
@@ -45,7 +45,7 @@
         android:layout_alignLeft="@+id/editText_smtp"
         android:layout_below="@+id/editText_smtp"
         android:layout_marginTop="25dp"
-        android:hint="subject..."
+        android:hint="тема письма..."
         android:ems="10" />
 
     <EditText
