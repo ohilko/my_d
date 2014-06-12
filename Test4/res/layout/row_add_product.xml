@@ -4,40 +4,43 @@
     android:layout_height="match_parent" >
 
     <TextView
+        android:id="@+id/textView_um"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/textView_name"
+        android:gravity="left"
+        android:text="Ед.Из." />
+
+    <TextView
         android:id="@+id/textView_name"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="13dp"
+        android:layout_marginLeft="5dp"
         android:gravity="left"
         android:text="Название" />
 
     <TextView
-        android:id="@+id/textView_um"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:gravity="left"
-        android:text="Един. измерения" />
-
-    <TextView
         android:id="@+id/textView_price"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="63dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/textView_um"
         android:gravity="left"
         android:text="Цена" />
 
     <TextView
         android:id="@+id/textView_amount"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/textView_price"
         android:gravity="left"
-        android:text="Количество" />
+        android:text="Кол-во" />
 
 </RelativeLayout>

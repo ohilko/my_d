@@ -97,6 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text=""
+        android:background="@drawable/button_round"
         android:textStyle="bold" />
  
     <Button
@@ -104,7 +105,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Выбор файла"
+        android:text=""
+        android:background="@drawable/button_round"
         android:textStyle="bold" />
  
     <ScrollView

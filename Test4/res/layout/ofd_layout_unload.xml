@@ -28,7 +28,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:text="@string/ofd_go_up_text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:background="@drawable/button_round"/>
 
         <Button
             android:id="@+id/of_choose"
@@ -36,7 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:text="Выбрать"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:background="@drawable/button_round"/>
     </LinearLayout>
 
     <ListView

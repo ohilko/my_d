@@ -16,8 +16,10 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="40dp"
+        android:background="#dddddd"
         android:ems="10"
-        android:hint="@string/some_hint_path" >
+        android:hint="@string/some_hint_path"
+        android:textStyle="italic" >
 
         <requestFocus />
     </EditText>
@@ -30,6 +32,7 @@
         android:layout_alignRight="@+id/editText_path"
         android:layout_below="@+id/editText_path"
         android:layout_marginTop="30dp"
+        android:background="@drawable/button_round"
         android:text="@string/browse" />
 
     <Button
@@ -40,6 +43,7 @@
         android:layout_alignRight="@+id/button_browse"
         android:layout_below="@+id/button_browse"
         android:layout_marginTop="90dp"
+        android:background="@drawable/button_round"
         android:text="@string/open" />
 
 </RelativeLayout>

@@ -34,6 +34,7 @@
                 android:id="@+id/textView_provider_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="#dddddd"
                 android:ems="10"
                 android:hint="имя..." >
             </TextView>
@@ -108,8 +109,8 @@
             android:background="#dddddd" >
 
             <TextView
-                android:id="@+id/textView_product_name"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView_name"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
@@ -118,33 +119,38 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView_product_um"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView_um"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/textView_name"
                 android:gravity="left"
-                android:text="Един. измерения"
+                android:text="Ед.Из."
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView_product_price"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView_price"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/textView_product_um"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/textView_um"
                 android:gravity="left"
                 android:text="Цена"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView_product_amount"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView_amount"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/textView_price"
                 android:gravity="left"
-                android:text="Количество"
+                android:text="Кол-во"
                 android:textStyle="bold" />
+
         </TableRow>
 
         <ListView
@@ -162,6 +168,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignRight="@+id/table_request_products_label"
         android:layout_below="@+id/table_add_edit_request"
+        android:background="@drawable/button_round"
         android:text="Добавить товар" />
 
     <Button
@@ -172,6 +179,7 @@
         android:layout_alignLeft="@+id/table_request_products_label"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/table_request_products_label"
+        android:background="@drawable/button_round"
         android:text="Сохранить" />
 
 </RelativeLayout>

@@ -29,7 +29,8 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="0.22"
             android:text="@string/ofd_go_up_text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:background="@drawable/button_round"/>
     </LinearLayout>
 
     <ListView

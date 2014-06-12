@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import ohilko.test4.R;
 import ohilko.test4.adapters.MyAdapterProduct;
@@ -31,6 +32,7 @@ public class AddEditRequestActivity extends Activity {
 	private long providerID;
 	private DatabaseConnector db;
 	private ListView list_request_products;
+	private ListView list_lable_request_products;
 	private TextView allCost_all;
 	private TextView provider_name;
 	private long[] productsId = null;
@@ -118,6 +120,7 @@ public class AddEditRequestActivity extends Activity {
 						}
 					}
 				} else {
+					db.open();
 					Cursor products_request = db.getRow(
 							DatabaseConnector.TABLE_NAME[4],
 							DatabaseConnector.REQUEST_PRODUCT_FIELDS,
@@ -146,6 +149,7 @@ public class AddEditRequestActivity extends Activity {
 						}
 					}
 				}
+				db.close();
 				Intent request = new Intent(AddEditRequestActivity.this,
 						ListRequestActivity.class);
 				startActivity(request);
@@ -190,11 +194,22 @@ public class AddEditRequestActivity extends Activity {
 
 		db = new DatabaseConnector(this);
 		list_request_products = (ListView) findViewById(R.id.list_request_products);
+//		list_lable_request_products = (ListView) findViewById(R.id.list_lable_request_products);
+//		
+//		ArrayList<Product> lable_list = new ArrayList<Product>();
+//		lable_list.add(new Product("Название", "Ед.Из.", "Цена", "Кол-во", 1));
+//		list_lable_request_products.setAdapter(new MyAdapterProduct(this, lable_list));
+		
 		provider_name.setOnClickListener(providerClicked);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			rowID = extras.getLong(ListRequestActivity.ROW_ID);
+			db.open();
+			Cursor provider = db.getRowById(DatabaseConnector.TABLE_NAME[2], rowID);
+			if (provider.moveToFirst()) {
+				providerID = Long.parseLong(provider.getString(1));
+			}
 			if (extras.getString(ChooseProviderActivity.PROVIDER_NAME) != null) {
 				provider_name.setText(extras
 						.getString(ChooseProviderActivity.PROVIDER_NAME));

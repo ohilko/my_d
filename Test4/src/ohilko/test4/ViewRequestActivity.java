@@ -138,9 +138,11 @@ public class ViewRequestActivity extends Activity {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					while (request_products.moveToFirst()) {
-						db.deleteRow(DatabaseConnector.TABLE_NAME[4],
-								Long.parseLong(request_products.getString(0)));
+					if (request_products.moveToFirst()) {
+						while (request_products.moveToNext()) {
+							db.deleteRow(DatabaseConnector.TABLE_NAME[4], Long
+									.parseLong(request_products.getString(0)));
+						}
 					}
 					db.deleteRow(DatabaseConnector.TABLE_NAME[2], rowID);
 					startActivity(new Intent(ViewRequestActivity.this,

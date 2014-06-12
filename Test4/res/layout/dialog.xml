@@ -12,37 +12,11 @@
         android:layout_marginLeft="52dp"
         android:layout_toRightOf="@+id/textView_amount"
         android:ems="10"
+        android:background="#dddddd"
         android:inputType="number" >
 
         <requestFocus />
     </EditText>
-
-    <TextView
-        android:id="@+id/textView_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editText_amount"
-        android:layout_alignBottom="@+id/editText_amount"
-        android:layout_alignParentLeft="true"
-        android:text="Количество" />
-
-    <TextView
-        android:id="@+id/textView_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/editText_amount"
-        android:layout_marginTop="14dp"
-        android:text="Цена" />
-
-    <TextView
-        android:id="@+id/textView_sum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView_price"
-        android:layout_marginTop="20dp"
-        android:text="Сумма" />
 
     <TextView
         android:id="@+id/textView_price_text"
@@ -60,5 +34,33 @@
         android:layout_alignBottom="@+id/textView_sum"
         android:layout_alignLeft="@+id/textView_price_text"
         android:text="0" />
+
+    <TextView
+        android:id="@+id/textView_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editText_amount"
+        android:layout_alignBottom="@+id/editText_amount"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="21dp"
+        android:text="Количество" />
+
+    <TextView
+        android:id="@+id/textView_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_amount"
+        android:layout_below="@+id/editText_amount"
+        android:layout_marginTop="17dp"
+        android:text="Цена" />
+
+    <TextView
+        android:id="@+id/textView_sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_price"
+        android:layout_below="@+id/textView_price"
+        android:layout_marginTop="18dp"
+        android:text="Сумма" />
 
 </RelativeLayout>

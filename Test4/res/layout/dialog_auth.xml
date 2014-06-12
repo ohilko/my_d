@@ -11,9 +11,11 @@
         android:layout_alignLeft="@+id/editText_dialog_login"
         android:layout_below="@+id/editText_dialog_login"
         android:layout_marginTop="25dp"
+        android:background="#dddddd"
         android:ems="10"
         android:hint="пароль..."
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textStyle="italic" />
 
     <EditText
         android:id="@+id/editText_pop3"
@@ -22,8 +24,10 @@
         android:layout_alignLeft="@+id/editText_dialog_password"
         android:layout_below="@+id/editText_dialog_password"
         android:layout_marginTop="25dp"
+        android:background="#dddddd"
+        android:ems="10"
         android:hint="pop3 хост..."
-        android:ems="10" />
+        android:textStyle="italic" />
 
     <EditText
         android:id="@+id/editText_smtp"
@@ -32,8 +36,10 @@
         android:layout_alignLeft="@+id/editText_pop3"
         android:layout_below="@+id/editText_pop3"
         android:layout_marginTop="25dp"
+        android:background="#dddddd"
+        android:ems="10"
         android:hint="smtp хост..."
-        android:ems="10" >
+        android:textStyle="italic" >
 
         <requestFocus />
     </EditText>
@@ -45,8 +51,10 @@
         android:layout_alignLeft="@+id/editText_smtp"
         android:layout_below="@+id/editText_smtp"
         android:layout_marginTop="25dp"
+        android:background="#dddddd"
+        android:ems="10"
         android:hint="тема письма..."
-        android:ems="10" />
+        android:textStyle="italic" />
 
     <EditText
         android:id="@+id/editText_dialog_login"
@@ -56,8 +64,10 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="37dp"
         android:layout_marginTop="18dp"
+        android:background="#dddddd"
         android:ems="10"
         android:hint="email..."
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:textStyle="italic" />
 
 </RelativeLayout>
