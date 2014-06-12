@@ -114,7 +114,7 @@ public class SDActivity extends Activity {
 	};
 
 	private void openDialog() {
-		String[] fileFor = {};
+		String[] fileFor = {"xml"};
 		OpenFileDialog ofd = new OpenFileDialog(this, Environment
 				.getExternalStorageDirectory().toString(), fileFor);
 		ofd.show();

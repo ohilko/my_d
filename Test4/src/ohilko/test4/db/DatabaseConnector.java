@@ -9,7 +9,7 @@ public class DatabaseConnector {
 	private static final String DATABASE_NAME = "db_diplom";
 	public static final String[] PRODUCT_FIELDS = { "_id", "ID",
 			"ID_directory", "name", "unitMeasurement", "price", "isDirectory" };
-	public static final String[] PROVIDER_FIELDS = { "_id", "ID", "name",
+	public static final String[] CLIENT_FIELDS = { "_id", "ID", "name",
 			"address", "phone" };
 	public static final String[] REQUEST_FIELDS = { "_id", "provider_id",
 			"date", "allCost", "isUnloaded" };
@@ -17,7 +17,7 @@ public class DatabaseConnector {
 			"request_id", "product_id", "amount" };
 	public static final String[] PRODUCT_CHILD_FIELDS = { "_id", "product_id",
 			"product_child_id", "isChildDirectory" };
-	public static final String[] TABLE_NAME = { "Product", "Provider",
+	public static final String[] TABLE_NAME = { "Product", "Client",
 			"Request", "Product_child", "Request_product", "Mail_Data", "SD_Data"};
 	public static final String[] MAIL_DATA_FIELDS = {"_id", "login" , "password", "smtp", "pop3", "subject"};
 	
@@ -135,7 +135,7 @@ public class DatabaseConnector {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(createTable(PRODUCT_FIELDS, TABLE_NAME[0]));
-			db.execSQL(createTable(PROVIDER_FIELDS, TABLE_NAME[1]));
+			db.execSQL(createTable(CLIENT_FIELDS, TABLE_NAME[1]));
 			db.execSQL(createTable(REQUEST_FIELDS, TABLE_NAME[2]));
 			db.execSQL(createTable(PRODUCT_CHILD_FIELDS, TABLE_NAME[3]));
 			db.execSQL(createTable(REQUEST_PRODUCT_FIELDS, TABLE_NAME[4]));

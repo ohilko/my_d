@@ -98,7 +98,7 @@ public class ChooseProviderActivity extends Activity implements
 		db = new DatabaseConnector(this);
 		db.open();
 		Cursor providers = db.getAllRows(DatabaseConnector.TABLE_NAME[1],
-				DatabaseConnector.PROVIDER_FIELDS, "name", null);
+				DatabaseConnector.CLIENT_FIELDS, "name", null);
 
 		while (providers.moveToNext()) {
 			Provider provider = new Provider(providers.getString(2),

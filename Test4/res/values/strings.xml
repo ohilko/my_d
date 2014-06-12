@@ -33,7 +33,7 @@
     <string name="title_activity_list_request">Список заявок</string>
     <string name="activity_see_no_items"></string>
     <string name="label_date">Дата</string>
-    <string name="label_provider">Поставщик</string>
+    <string name="label_provider">Покупатель</string>
     <string name="label_allCost">Общая стоимость</string>
     <string name="label_products">Продукты</string>
     <string name="label_products_name">Имя</string>
@@ -62,8 +62,8 @@
     <string name="title_activity_add_edit_request">Добавление/Редактирование заявки</string>
     <string name="title_activity_upload">Выгрузка заявок</string>
     <string name="title_activity_view_request">Просмотр заявки</string>
-    <string name="title_activity_choose_provider">Выбор поставщика</string>
-    <string name="title_activity_choose_product">Выбор продукта</string>
+    <string name="title_activity_choose_provider">Выбор покупателя</string>
+    <string name="title_activity_choose_product">Выбор товара</string>
     <string name="title_activity_mail">MailActivity</string>
 
 </resources>

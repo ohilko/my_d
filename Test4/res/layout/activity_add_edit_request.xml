@@ -27,7 +27,7 @@
                 android:id="@+id/textView_label_provider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Поставщик"
+                android:text="Покупатель"
                 android:textStyle="bold" />
 
             <TextView
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="имя поставщика" >
+                android:hint="имя..." >
             </TextView>
         </TableRow>
 

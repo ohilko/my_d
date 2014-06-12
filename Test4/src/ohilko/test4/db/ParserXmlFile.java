@@ -26,8 +26,11 @@ public class ParserXmlFile {
 
 		try {
 			db.open();
-			Cursor requests = db.getAllRows(DatabaseConnector.TABLE_NAME[2],
-					DatabaseConnector.REQUEST_FIELDS, "date", null);
+//			Cursor requests = db.getAllRows(DatabaseConnector.TABLE_NAME[2],
+//					DatabaseConnector.REQUEST_FIELDS, "date", null);
+			
+			Cursor requests = db.getRow(DatabaseConnector.TABLE_NAME[2],
+					DatabaseConnector.REQUEST_FIELDS, new String[] { "isDownload" }, new String[] { "false" });
 			
 			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 			bw.write("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
@@ -45,10 +48,10 @@ public class ParserXmlFile {
 				bw.write("<" + request + ">");
 				if (provider.moveToFirst()) {
 					for (int i = 1; i < 3; i++) {
-						bw.write("<" + DatabaseConnector.PROVIDER_FIELDS[i]
+						bw.write("<" + DatabaseConnector.CLIENT_FIELDS[i]
 								+ ">");
 						bw.write(provider.getString(i));
-						bw.write("</" + DatabaseConnector.PROVIDER_FIELDS[i]
+						bw.write("</" + DatabaseConnector.CLIENT_FIELDS[i]
 								+ ">");
 					}
 				}
@@ -132,7 +135,7 @@ public class ParserXmlFile {
 						&& parser.getName().equals(
 								DatabaseConnector.TABLE_NAME[1])) {
 					parser.next();
-					parsePart(parser, db, DatabaseConnector.PROVIDER_FIELDS,
+					parsePart(parser, db, DatabaseConnector.CLIENT_FIELDS,
 							DatabaseConnector.TABLE_NAME[1]);
 
 				}
