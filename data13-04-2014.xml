@@ -104,29 +104,29 @@
 	</Product>
 </Products>
 
-<Provoders>
-	<Provider>
+<Clients>
+	<Client>
 		<ID>00000000-0000-0000-0000-000000000016</ID>
-		<name>provider-1</name>
+		<name>client-1</name>
 		<address>address-1</address>
 		<phone>phone-1</phone>
-	</Provider>
-	<Provider>
+	</Client>
+	<Client>
 		<ID>00000000-0000-0000-0000-000000000017</ID>
-		<name>provider-2</name>
+		<name>client-2</name>
 		<address>address-2</address>
 		<phone>phone-2</phone>
-	</Provider>
-	<Provider>
+	</Client>
+	<Client>
 		<ID>00000000-0000-0000-0000-000000000018</ID>
-		<name>provider-3</name>
+		<name>client-3</name>
 		<address>address-3</address>
 		<phone>phone-3</phone>
-	</Provider>
-	<Provider>
+	</Client>
+	<Client>
 		<ID>00000000-0000-0000-0000-000000000019</ID>
-		<name>provider-4</name>
+		<name>client-4</name>
 		<address>address-4</address>
 		<phone>phone-4</phone>
-	</Provider>
-</Providers>
+	</Client>
+</Clients>

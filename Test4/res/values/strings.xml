@@ -3,8 +3,12 @@
 
     <string name="app_name">Сборщик заявок</string>
     <string name="action_settings">Настройки</string>
-    <string name="hello_world">Это приложение позволит вам работать с заявками: создавать их, редактировать, удалять. 
-        Но для начала работы надо загрузить в приложение данные, воспользовавшись пунктом ПОЛУЧЕНИЕ ДАННЫХ  в меню активности СПИСОК ЗАЯВОК </string>
+    <string name="hello_world1">Это приложение позволит вам работать с заявками:</string>
+    <string name="hello_world2"> - создавать их;</string>
+    <string name="hello_world3"> - редактировать;</string>
+    <string name="hello_world4"> - удалять.</string>
+    <string name="hello_world5">Но для начала работы надо загрузить в приложение данные, воспользовавшись пунктом ПОЛУЧЕНИЕ ДАННЫХ  в меню активности СПИСОК ЗАЯВОК </string>
+    
     <string name="download_SD">Скачать данные с SD-карты</string>
     <string name="download_mail">Скачать данные, используя почту</string>
     <string name="download_cloud">Скачать даннные с Dropbox</string>
